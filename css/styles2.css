@@ -1,0 +1,999 @@
+/* Modern Space Theme mit Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+    /* Farbschema */
+    --space-black: #0f1729;
+    --deep-space: #1a1f35;
+    --nebula-blue: #2e3b55;
+    --star-white: #ffffff;
+    --cosmic-accent: #7b88ff;
+    --cosmic-glow: #4f9de7;
+    --stardust: rgba(123, 136, 255, 0.1);
+    --nova-gradient: linear-gradient(135deg, #7b88ff 0%, #4f9de7 100%);
+    
+    /* Abstände */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+}
+
+body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--space-black);
+    color: var(--star-white);
+    line-height: 1.7;
+    margin: 0;
+    padding: var(--space-lg);
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(123, 136, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(79, 157, 231, 0.03) 0%, transparent 50%);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-md);
+}
+
+/* TITLE */
+
+.title-wrapper {
+    text-align: center;
+    margin: var(--space-xl) 0 calc(var(--space-xl) * 1.5);
+    padding: var(--space-lg) 0;
+    position: relative;
+    background: var(--deep-space);
+    border-radius: 24px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(123, 136, 255, 0.1);
+    border: 1px solid rgba(123, 136, 255, 0.1);
+    animation: cosmic-pulse 4s infinite ease-in-out;
+}
+
+.title-wrapper:hover {
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.4),
+        0 0 50px rgba(123, 136, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(135deg, #7b88ff 0%, #4f9de7 50%, #7b88ff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 4s linear infinite;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-md);
+    padding: 0 var(--space-lg);
+}
+
+.title-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-sm) 0;
+}
+
+.divider-line {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(to right, transparent, var(--cosmic-glow), transparent);
+    opacity: 0.3;
+}
+
+.divider-icon {
+    font-size: 1.2rem;
+    animation: rotate 8s linear infinite;
+    color: var(--cosmic-accent);
+}
+
+.subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    color: var(--cosmic-glow);
+    opacity: 0.9;
+    margin: var(--space-sm) auto 0; /* auto für horizontale Zentrierung */
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    padding: 0 var(--space-xl);
+    text-align: center; /* Explizite Zentrierung */
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .title-wrapper {
+        margin: var(--space-lg) var(--space-md) var(--space-xl); /* Angepasste Abstände */
+        padding: var(--space-md) 0;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        font-weight: 300; /* Deutlich dünner auf Mobile */
+        max-width: 280px;
+        margin: var(--space-sm) auto 0;
+    }
+}
+
+/* Anpassung der nachfolgenden Cards für besseren visuellen Fluss */
+.card:first-of-type {
+    margin-top: 0; /* Entfernt zusätzlichen Abstand, da wir ihn bereits im title-wrapper haben */
+}
+.card {
+    background: var(--deep-space);
+    border-radius: 24px;
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(123, 136, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(123, 136, 255, 0.1);
+    padding-top: var(--space-lg); 
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card:hover {
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.4),
+        0 0 50px rgba(123, 136, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cosmic-accent);
+    margin: var(--space-lg) 0 var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+p {
+	text-align: center;
+}
+
+.hints-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.hint {
+    background: var(--nebula-blue);
+    padding: var(--space-lg);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hint-locked, .hint-unlocked {
+    display: flex;
+    align-items: center;
+}
+
+.hint-revealed {
+    background: rgba(123, 136, 255, 0.1);
+}
+
+.hint-icon {
+    font-size: 1.4rem;
+}
+
+.hint-status {
+    color: var(--cosmic-glow);
+}
+
+.hint-text {
+    color: var(--star-white);
+}
+
+/* Hover Effekte */
+.hint-locked:hover, .hint-unlocked:hover {
+    transform: translateX(var(--space-xs));
+    background: rgba(123, 136, 255, 0.2);
+}
+
+.button {
+    background: var(--nova-gradient);
+    color: var(--star-white);
+    border: none;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.3s ease;
+    margin: var(--space-xl) auto;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 
+        0 4px 15px rgba(123, 136, 255, 0.3),
+        0 0 30px rgba(123, 136, 255, 0.1);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 20px rgba(123, 136, 255, 0.4),
+        0 0 40px rgba(123, 136, 255, 0.15);
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.facts-list {
+    list-style-type: none;
+    padding: 0;
+    margin: var(--space-md) 0;
+}
+
+.facts-list li {
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid rgba(123, 136, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.facts-list li:before {
+    content: "✧";
+    margin-right: var(--space-md);
+    color: var(--cosmic-accent);
+    font-size: 1.2em;
+}
+
+.facts-list li:hover {
+    background: var(--stardust);
+    border-radius: 8px;
+    padding-left: var(--space-xl);
+}
+
+.facts-list li:last-child {
+    border-bottom: none;
+}
+
+.puzzle-text {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin: var(--space-xs) 0;
+    padding: var(--space-xl);
+    background: var(--stardust);
+    border-radius: 16px;
+    color: var(--star-white);
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(123, 136, 255, 0.15);
+}
+
+.puzzle-text:before,
+.puzzle-text:after {
+    content: '"';
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    color: var(--cosmic-accent);
+    position: absolute;
+    height: 1rem;
+    line-height: 1;
+}
+
+.puzzle-text:before {
+    top: var(--space-md);
+    left: var(--space-md);
+}
+
+.puzzle-text:after {
+    bottom: var(--space-xs);
+    right: var(--space-md);
+}
+
+/* Subtile Animation, dass die Boxen leuchten */
+@keyframes cosmic-pulse {
+    0% {
+        box-shadow: 0 0 30px rgba(123, 136, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(123, 136, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(123, 136, 255, 0.1);
+    }
+}
+
+.card {
+    animation: cosmic-pulse 4s infinite ease-in-out;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    body {
+        padding: var(--space-md);
+    }
+
+    .card {
+        padding: var(--space-lg);
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .puzzle-text {
+        font-size: 1.2rem;
+        padding: var(--space-lg);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .button,
+    .facts-list li {
+        transition: none;
+        animation: none;
+    }
+}
+
+.constellation-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0; /* kein Abstand nach oben zum Subtitle */
+    margin-bottom: var(--space-lg);
+    background: var(--nova-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    text-shadow: 
+        0 2px 15px rgba(123, 136, 255, 0.2),
+        0 0 30px rgba(79, 157, 231, 0.3);
+}
+
+.constellation-alias {
+    font-size: 1.2rem;
+    color: var(--cosmic-glow);
+    opacity: 0.8;
+    text-align: center;
+    margin-top: -0.9rem;
+    margin-bottom: 1.3rem;
+    /* font-style: italic; */
+}
+
+.constellation-subtitle {
+    text-align: center;
+    color: var(--cosmic-glow);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-xl);
+    opacity: 0.7;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.constellation-subtitle::before,
+.constellation-subtitle::after {
+    content: "";
+    height: 1px;
+    width: 30px;
+    background: linear-gradient(to right, transparent, var(--cosmic-glow), transparent);
+    opacity: 0.3;
+}
+
+.constellation-title-wrapper {
+    position: relative;
+    margin-bottom: var(--space-xl);
+    margin-top: var(--space-md); /* etwas Abstand von oben */
+}
+
+.constellation-title-wrapper::before,
+.constellation-title-wrapper::after {
+    content: "✧";
+    position: absolute;
+    font-size: 1.5rem;
+    color: var(--cosmic-accent);
+    opacity: 0.6;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.constellation-title-wrapper::before {
+    left: 0;
+}
+
+.constellation-title-wrapper::after {
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    .constellation-title {
+        font-size: 2.5rem;
+    }
+    
+    .constellation-subtitle {
+        font-size: 1rem;
+    }
+}
+
+.progress-indicator {
+    text-align: right;
+    color: var(--cosmic-glow);
+    font-size: 0.9rem;
+    opacity: 0.8;
+    padding: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+/* Styling für den Abschluss-Screen */
+.completion-message {
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+.completion-screen {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.completion-screen.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional: Spezielle Styling für den Completion Screen */
+.completion-screen .constellation-title {
+    color: var(--cosmic-accent);
+    text-shadow: 0 0 20px rgba(123, 136, 255, 0.3);
+}
+
+.completion-screen .puzzle-text {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: var(--space-xl);
+}
+
+
+
+/* STARMAP */
+
+.starmap-card {
+    padding: var(--space-md);
+    overflow: hidden;
+}
+
+.starmap-container {
+    position: relative;
+    width: 100%;
+    background: var(--space-black);
+    border-radius: 12px;
+    border: 1px solid var(--cosmic-glow);
+}
+
+.starmap-controls {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.zoom-button {
+    background: rgba(123, 136, 255, 0.2);
+    border: 1px solid var(--cosmic-glow);
+    color: var(--star-white);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.zoom-button:hover {
+    background: rgba(123, 136, 255, 0.4);
+}
+
+.starmap-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    /* Aktiviere Hardware-Beschleunigung */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.starmap-wrapper:active {
+    cursor: grabbing;
+}
+
+.starmap-image {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center;
+    transition: scale 0.1s ease-out;
+    will-change: transform;
+    z-index: 1;
+}
+
+.starmap-layers {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    transform-origin: 0 0;
+    will-change: transform;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1340 / 1369;
+}
+
+.starmap-image,
+.constellation-overlays,
+.constellation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Behält Proportionen bei */
+    transform-origin: 0 0;
+}
+
+.constellation-overlays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Höher als die Basiskarte */
+}
+
+.constellation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    pointer-events: none; /* Damit man durch die SVGs hindurch die Karte bedienen kann */
+    
+    /* Schnelleres Rendering */
+    image-rendering: -webkit-optimize-contrast; /* Für Chrome/Safari */
+    image-rendering: crisp-edges;              /* Standard */
+    /* Browser-Optimierungen */
+    transform: translate3d(0, 0, 0);    /* Hardware-Acceleration */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Preload-Hint für Browser */
+    will-change: transform, opacity;
+    /* SVG-spezifische Optimierungen */
+    shape-rendering: optimizeSpeed;      /* Schnelleres Rendering */
+    text-rendering: optimizeSpeed;
+
+    /* Wichtig: Gleiche Dimensionen wie das Basisbild */
+    object-fit: contain;
+}
+
+.constellation-overlay.visible {
+    opacity: 0.7;
+}
+
+/* Glow-Effekt für sichtbare Sternbilder */
+.constellation-overlay.visible {
+    filter: drop-shadow(0 0 3px rgba(255, 155, 66, 0.3));
+}
+
+/* Touch-Geräte Optimierungen */
+@media (hover: none) {
+    .starmap-wrapper {
+        touch-action: none;
+    }
+}
+
+
+/* 
+   STARMAP SELECTION 
+*/
+.starmap-controls-left {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.select-mode-button {
+    /* Gleiche Basis-Styles wie zoom-button */
+    background: rgba(123, 136, 255, 0.2);
+    border: 1px solid var(--cosmic-glow);
+    color: var(--star-white);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.select-mode-button.active {
+    background: rgba(123, 136, 255, 0.4);
+    box-shadow: 0 0 10px var(--cosmic-glow);
+}
+
+.selection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+}
+
+.selection-box {
+    position: absolute;
+    background: rgba(123, 136, 255, 0.3);
+    border: 2px solid var(--cosmic-accent);
+    pointer-events: none;
+}
+
+.selection-box.invalid-size {
+    border-color: #ff4444;
+    background: rgba(255, 68, 68, 0.3);
+}
+
+.selection-box.correct {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.3);
+    animation: pulse-success 1s ease;
+}
+
+.selection-box.incorrect {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.3);
+    animation: shake 0.5s ease;
+}
+
+@keyframes pulse-success {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.selection-feedback {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    z-index: 30;
+    text-align: center;
+    background: var(--deep-space);
+    border: 1px solid rgba(123, 136, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    white-space: pre-line; /* Erhält \n Zeilenumbrüche */
+    max-width: 80%; /* Verhindert zu breite Nachrichten */
+    width: auto; /* Lässt die Box sich an den Inhalt anpassen */
+    animation: fade-in 0.3s ease;
+}
+
+/* Spezifische mobile Anpassungen */
+@media (max-width: 768px) {
+    .selection-feedback {
+        bottom: 10px; /* Näher am unteren Rand */
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        max-width: 90%; /* Etwas breiter auf kleinen Geräten */
+    }
+}
+
+@keyframes fade-in {
+    from { 
+        opacity: 0; 
+        transform: translate(-50%, 20px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translate(-50%, 0);
+    }
+}
+
+.debug-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    transform-origin: 0 0;
+}
+
+/* Optional: Verhindern dass andere Styles das Debug-Overlay beeinflussen */
+.debug-overlay * {
+    transform-origin: 0 0;
+    object-fit: none;
+}
+
+/*
+DEDICATION
+*/
+/* Dedication Styles */
+.dedication-wrapper {
+    margin: var(--space-xl) auto;
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+    max-width: 600px;
+}
+
+.cosmic-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--nova-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: var(--space-sm);
+}
+
+.cosmic-subtitle {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    color: var(--cosmic-glow);
+    opacity: 0.9;
+    font-size: 1.1rem;
+    margin-bottom: var(--space-md);
+}
+
+.cosmic-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+    position: relative;
+}
+
+.cosmic-divider::before,
+.cosmic-divider::after {
+    content: "";
+    height: 1px;
+    width: 100px;
+    background: linear-gradient(to right, transparent, var(--cosmic-glow), transparent);
+    opacity: 0.3;
+}
+
+.star {
+    color: var(--cosmic-accent);
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+.star:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.cosmic-text {
+    font-size: 1.3rem;
+    color: var(--star-white);
+    margin-bottom: var(--space-sm);
+}
+
+.cosmic-note {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    color: var(--cosmic-glow);
+    opacity: 0.8;
+    font-size: 1rem;
+}
+
+.whisper {
+    opacity: 0.6;
+}
+
+.accent {
+    font-family: monospace;
+    color: var(--cosmic-accent);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .cosmic-title {
+        font-size: 2rem;
+    }
+    
+    .cosmic-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cosmic-divider::before,
+    .cosmic-divider::after {
+        width: 60px;
+    }
+}
+
+/* Neue Styles für die Emojis */
+.emoji-exception {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    color: inherit;
+}
+
+/* Spezifische Farben für die Emojis */
+.emoji-heart {
+    color: #ff4d7e; /* Rötlich für das Herz */
+}
+
+.emoji-otter {
+    color: #8b9dc6; /* Helles Blaugrau für den Otter */
+}
+
+/* Overlay Styles */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 41, 1); 
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-content {
+    max-width: 600px;
+    padding: var(--space-xl);
+}
+
+.draco-question {
+    margin-top: var(--space-xl);
+    text-align: center;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 1.5s forwards;
+}
+
+.question-text {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--cosmic-glow);
+    margin-bottom: var(--space-lg);
+}
+
+.start-button {
+    background: var(--nova-gradient);
+    border: none;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: 12px;
+    color: var(--star-white);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 2s forwards;
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(123, 136, 255, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation für das Ausblenden */
+.welcome-overlay.hiding {
+    animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
