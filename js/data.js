@@ -666,7 +666,7 @@ const constellationData = {
 					"facts": [
 						"Der Stern Algol ('Dämonenstern') ist ein bedeckungsveränderlicher Doppelstern. Alle 2,87 Tage wird der hellere Stern vom dunkleren teilweise verdeckt, wodurch seine Helligkeit deutlich abnimmt.",
 						"Der Perseus-Doppelsternhaufen (h und χ Persei) ist mit bloßem Auge als verwaschener Doppelfleck zu sehen. Im Fernglas löst er sich in zwei prachtvolle Sternhaufen auf.",
-						"Im August jeden Jahres scheinen aus Perseus die Perseiden zu regnen - einer der aktivsten und bekanntesten Meteorströme des Jahres (wobei: wie wir gelernt haben, mittlerweile übertroffen von den Geminiden 😉)."
+						"Im August jeden Jahres scheinen aus Perseus die Perseiden zu regnen - einer der aktivsten und bekanntesten Meteorströme des Jahres."
 					],
 					"icon": "🌟"
 				}
