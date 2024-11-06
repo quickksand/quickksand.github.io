@@ -269,7 +269,7 @@ const constellationData = {
 					"subtitle": "Navigation und Zeitbestimmung",
 					"facts": [
 						"Bei den alten Ägyptern markierte die Position des Großen Wagens die Nachtstunden - eine Art himmlische Uhr.",
-						"Die gemeinsame Bewegung von fünf der sieben Hauptsterne wurde erst 1869 entdeckt - sie gehören zu den ältesten bekannten Sternströmen."
+						"Die gemeinsame Bewegung von fünf der sieben Hauptsterne wurde erst 1869 entdeckt - sie gehören zu den ältesten bekannten Sternströmen.",
 						"Der Große Wagen war für die Seefahrt von enormer Bedeutung: Die 'Pointer Stars' (die beiden vorderen Kastensterne) zeigen zuverlässig zum Polarstern.",
 					],
 					"icon": "🧭"
@@ -400,7 +400,7 @@ const constellationData = {
 				   "title": "Spannende Details",
 				   "facts": [
 					   "Weird Sidenote: Die Geschichte der Kallisto zeigt ein häufiges Muster in der Mythologie: Frauen werden für das Verhalten der Männer bestraft - ein früher Beleg für systemischen Sexismus.",
-					   "Interessanter Perspektivwechsel ist die Transformation: Statt die Bärengestalt als Strafe zu sehen, kann man sie als Symbol für weibliche Stärke und Naturverbundenheit interpretieren"
+					   "Interessanter Perspektivwechsel ist die Transformation: Statt die Bärengestalt als Strafe zu sehen, kann man sie als Symbol für weibliche Stärke und Naturverbundenheit interpretieren",
 					   "Das Sternbild enthält ein einzigartiges Objekt: Den 'Eulennebel' M97, einen planetarischen Nebel, dessen dunkle 'Augen' ihm sein charakteristisches Aussehen geben."
 				   ],
 				   "icon": "🧠"
@@ -750,21 +750,20 @@ const constellationData = {
 					],
 					"icon": "🧠"
 				},
-		            "details2": {
-		                "title": "Zwillinge in Wissenschaft & Kultur",
-		                "subtitle": "Faszination Doppelt",
-		                "facts": [
-		                    "Die NASA nutzte eineiige Zwillinge für Studien zur Weltraumforschung: Ein Zwilling blieb auf der Erde, während der andere zur ISS flog. Nach einem Jahr zeigten sich erstaunliche Unterschiede in ihren Körpern! (zum nachlesen 😉)",
-		                    "Das Sternbild inspirierte die Raumfahrt: Das sog. Gemini-Programm der NASA bereitete die Mondlandungen vor.",
-		                    "Zwillinge entwickeln oft eigene Sprachen - diese 'Kryptophasie' fasziniert Linguisten seit Jahrzehnten!",
-		                ],
-		                "icon": "🔬"
-		            }
+				"details2": {
+					"title": "Zwillinge in Wissenschaft & Kultur",
+					"subtitle": "Faszination Doppelt",
+					"facts": [
+						"Die NASA nutzte eineiige Zwillinge für Studien zur Weltraumforschung: Ein Zwilling blieb auf der Erde, während der andere zur ISS flog. Nach einem Jahr zeigten sich erstaunliche Unterschiede in ihren Körpern! (zum nachlesen 😉)",
+						"Das Sternbild inspirierte die Raumfahrt: Das sog. Gemini-Programm der NASA bereitete die Mondlandungen vor.",
+						"Zwillinge entwickeln oft eigene Sprachen - diese 'Kryptophasie' fasziniert Linguisten seit Jahrzehnten!",
+					],
+					"icon": "🔬"
+				}
 			}
 		},
-	    ,
 		{
-			"id": "leonidas_magnus",
+			"id": "orion",
 			"name": "Leonidas Magnus",
 			"alias": "Leon der Große",
 			"difficulty": "EASYPEASY",
