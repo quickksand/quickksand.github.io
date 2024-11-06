@@ -828,7 +828,7 @@ class ConstellationGame {
             valid: coveragePercent >= 80,
             coverage: coveragePercent,
             reason: coveragePercent >= 80 
-                ? 'Sternbild erfolgreich gefunden! \n\n GROß (jetzt auch mal 🌞)!' 
+                ? 'GROß (zur Abwechslung 🌞)\nSternbild gefunden!' 
                 : `Wie viel Dioptrien sitzen vor dem Bildschirm? 💩 Nur ${Math.round(coveragePercent)}% des Sternbilds sind in der Auswahl.`
         };
     }
@@ -854,11 +854,11 @@ class ConstellationGame {
     
     // Einzeichnen der Sternenbilder für abgeschlossene Challenges
     createConstellationOverlays() {
-        console.log('Erstelle Overlays für folgende Constellations:', 
-            this.constellations
-                .filter(constellation => this.isConstellationVisible(constellation.id))
-                .map(c => c.id)
-        );
+        // console.log('Erstelle Overlays für folgende Constellations:', 
+            // this.constellations
+                // .filter(constellation => this.isConstellationVisible(constellation.id))
+                // .map(c => c.id)
+        // );
 
         // Preload-Funktion
         const preloadSVG = (url) => {
@@ -923,7 +923,7 @@ class ConstellationGame {
             // Overlay Container suchen/erstellen und HTML einfügen
             const overlaysContainer = document.getElementById('constellationOverlays');
             if (overlaysContainer) {
-                console.log('Füge Overlays ein:', overlaysHTML);
+                //console.log('Füge Overlays ein:', overlaysHTML);
                 overlaysContainer.innerHTML = overlaysHTML;
             } else {
                 console.error('Overlay container nicht gefunden!');
