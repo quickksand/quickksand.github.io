@@ -761,6 +761,74 @@ const constellationData = {
 		                "icon": "🔬"
 		            }
 			}
+		},
+	    ,
+		{
+			"id": "leonidas_magnus",
+			"name": "Leonidas Magnus",
+			"alias": "Leon der Große",
+			"difficulty": "EASYPEASY",
+			"coordinates": {
+				"centroid": {
+					"x": 500,
+					"y": 500
+				},
+				"bounds": {
+					"minX": 450,
+					"minY": 450,
+					"maxX": 550,
+					"maxY": 550,
+					"width": 100,
+					"height": 100
+				}
+			},
+			"puzzle": {
+				"text": "",
+				"hints": [
+					"",
+					"",
+					""
+				],
+				"emergencyHint": {
+					"imageUrl": "/constellations/leonidas_magnus/outline.svg",
+					"description": "Schematische Darstellung des Leonidas Magnus"
+				}
+			},
+			"basics": {
+				"mythology": {
+					"title": "Mythologie",
+					"text": "Der Legende nach erschuf Zeus dieses Sternbild, als er sah, wie ein junger Held nicht nur körperliche Stärke zeigte (wie die typischen Helden), sondern auch emotionale Intelligenz und Empathie. Besonders beeindruckt war Zeus davon, wie der Held seine Geliebte in ihren Träumen unterstützte und ihr ...",
+					"icon": "🖼️"
+				},
+				"astronomy": {
+					"title": "Wichtigste astronomische Fakten",
+					"facts": [
+						"Der hellste Stern des Sternbilds, 'Cor Leonis' (Herz des Leon), ist ein besonderer veränderlicher Stern - seine Helligkeit pulsiert im 13-Sekunden-Takt, perfekt für einen Taylor-Swift-Beat",
+						"",
+						""
+					],
+					"icon": "🌟"
+				}
+			},
+			"details": {
+				"details1": {
+					"title": "Spannende Details",
+					"subtitle": "",
+					"facts": [
+						""
+					],
+					"icon": "🧠"
+				},
+				"details2": {
+					"title": "Psychologische Bedeutung",
+					"subtitle": "Archetyp des empathischen Beschützers",
+					"facts": [
+						"Jung hätte seine Freude: Hier verschmelzen die Archetypen des 'weisen Mentors' und des 'liebenden Beschützers' zu etwas Neuem",
+						""
+					],
+					"icon": "👩‍🎓"
+				}
+			}
 		}
     ]
 };
