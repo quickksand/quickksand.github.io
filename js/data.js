@@ -310,7 +310,7 @@ const constellationData = {
 			"basics": {
 				"mythology": {
 					"title": "Mythologie",
-					"text": "Cassiopeia war eine eitle Königin, die behauptete, sie und ihre Tochter Andromeda seien schöner als die Meernymphen. Zur Strafe für ihren Hochmut wurde sie von Poseidon an den Himmel verbannt, wo sie nun kopfüber um den Pol kreist - eine ewige Mahnung gegen Überheblichkeit.\n\n In der modernen Astronomie dient Cassiopeia als wichtiger 'Wegweiser' am Himmel: Durch ihre markante Form und die Position nahe dem Polarstern hilft sie bei der Orientierung - eine ironische Wendung für die einst so eitle Königin.",
+					"text": "Cassiopeia war eine eitle Königin, die behauptete, sie und ihre Tochter Andromeda seien schöner als die Meernymphen. Zur Strafe für ihren Hochmut wurde sie von Poseidon an den Himmel verbannt, wo sie nun kopfüber um den Pol kreist - eine ewige Mahnung gegen Überheblichkeit.",
 					"icon": "🖼️"
 				},
 				"astronomy": {
@@ -318,7 +318,8 @@ const constellationData = {
 					"facts": [
 						"Als zirkumpolares Sternbild ist Cassiopeia das ganze Jahr über sichtbar. Sie rotiert in 23 Stunden und 56 Minuten einmal um den Polarstern, wobei sich ihre Form von einem W zu einem M und wieder zurück wandelt.",
 						"1572 explodierte hier eine Supernova, die heller als die Venus leuchtete. Der Astronom Tycho Brahe beobachtete sie so genau, dass sie als 'Tycho-Supernova' in die Geschichte einging.",
-						"Das Sternbild liegt in einem besonders hellen Teil der Milchstraße. Mit bloßem Auge sind bei klarem Himmel zahlreiche Sternhaufen als neblige Flecken zu erkennen."
+						"Das Sternbild liegt in einem besonders hellen Teil der Milchstraße. Mit bloßem Auge sind bei klarem Himmel zahlreiche Sternhaufen als neblige Flecken zu erkennen.",
+						"In der modernen Astronomie dient Cassiopeia als wichtiger 'Wegweiser' am Himmel: Durch ihre markante Form und die Position nahe dem Polarstern hilft sie bei der Orientierung - eine ironische Wendung für die einst so eitle Königin."
 					],
 					"icon": "🌟"
 				}
@@ -763,7 +764,7 @@ const constellationData = {
 			}
 		},
 		{
-			"id": "orion",
+			"id": "leonidas_magnus",
 			"name": "Leonidas Magnus",
 			"alias": "Leon der Große",
 			"difficulty": "EASYPEASY",
