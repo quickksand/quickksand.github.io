@@ -828,7 +828,7 @@ class ConstellationGame {
             valid: coveragePercent >= 80,
             coverage: coveragePercent,
             reason: coveragePercent >= 80 
-                ? 'GROß (zur Abwechslung 🌞)\nSternbild gefunden!' 
+                ? 'GROß (ungewohnt 😜)\nSternbild gefunden!' 
                 : `Wie viel Dioptrien sitzen vor dem Bildschirm? 💩 Nur ${Math.round(coveragePercent)}% des Sternbilds sind in der Auswahl.`
         };
     }
