@@ -771,7 +771,7 @@ const constellationData = {
 				}
 			},
 			"puzzle": {
-				"text": "",
+				"text": "Zwischen duftenden Nebeln tanzt mein hellster Stern zu Techno & Taylor, während meine Kochmütze den Weg zum besten Couscous des Universums weist - wer bin ich?",
 				"hints": [
 					"",
 					"",
