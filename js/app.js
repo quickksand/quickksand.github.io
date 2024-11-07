@@ -1,825 +1,1310 @@
-const constellationData = {
-    "constellations": [
-        {
-            "id": "orion",
-            "name": "Orion",
-            "difficulty": "sehr leicht",
-            "coordinates": {
-                "centroid": {
-                    "x": 527.60,
-                    "y": 912.28
-                },
-                "bounds": {
-                    "minX": 470.66,
-                    "minY": 809.16,
-                    "maxX": 590.00,
-                    "maxY": 1011.83,
-                    "width": 119.33,
-                    "height": 202.67
+// List of technical debt (original_width & original_height are fixed)
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Overlay Management
+    const overlay = document.getElementById('welcomeOverlay');
+    const startButton = document.getElementById('startButton');
+    
+    startButton.addEventListener('click', () => {
+        overlay.classList.add('hiding');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            const game = new ConstellationGame(constellationData);
+        }, 50);
+    });
+});
+
+class ConstellationGame {
+    constructor(data) {
+        this.constellations = data.constellations
+        this.contentDiv = document.getElementById('content');
+        this.nextButton = document.getElementById('nextLevel');
+
+        // Initialisiere Zustände
+        this.initializeStates();
+        
+        // Versuche gespeicherten Spielstand zu laden oder starte neu
+        if (this.loadGameState()) {
+            // Wenn Spielstand geladen wurde, zeige aktuelles Level
+            this.showCurrentState();
+        } else {
+            // Wenn kein Spielstand, starte neues Spiel
+            this.initializeGame();
+        }
+    }
+
+    // Initialisierung der Grundzustände
+    initializeStates() {
+        this.currentConstellationIndex = 0;
+        this.constellation = this.constellations[0];
+        this.currentLevel = 0;
+        
+        this.constellationStates = {};
+        this.constellations.forEach(constellation => {
+            this.constellationStates[constellation.id] = {
+                visible: false,
+                completed: false
+            };
+        });
+
+        this.initializeHintStates();
+    }
+
+    // Speichern des Spielstands
+    saveGameState() {
+        const gameState = {
+            currentConstellationIndex: this.currentConstellationIndex,
+            constellationStates: this.constellationStates,
+            lastSaved: new Date().toISOString()
+        };
+        localStorage.setItem('constellationGameState', JSON.stringify(gameState));
+        console.log('Spielstand gespeichert:', gameState);
+    }
+
+    // Laden des Spielstands
+    loadGameState() {
+        const savedState = localStorage.getItem('constellationGameState');
+        if (savedState) {
+            const state = JSON.parse(savedState);
+            this.currentConstellationIndex = state.currentConstellationIndex;
+            this.constellationStates = state.constellationStates;
+            
+            if(this.currentConstellationIndex < this.constellations.length) {
+                this.currentLevel = 1;
+                this.constellation = this.constellations[this.currentConstellationIndex];
+                this.initializeHintStates();
+                
+                // Prüfe auf Bonus-Level
+                if (this.constellation.id === "leonidas_magnus"){
+                    this.currentLevel = 98;
                 }
-            },
-            "puzzle": {
-                "text": "Drei Könige in einer Reihe, der Riese trägt sie am Gürtel. Rot leuchtet seine Schulter, blau sein Fuß - wer bin ich?",
-                "hints": [
-                    "Suche drei gleich helle Sterne in perfekter Linie (der \"Gürtel\")",
-                    "Über dem Gürtel findest du einen auffällig rötlichen Stern (Betelgeuse)",
-                    "Der hellste Stern des Sternbildes (Rigel) liegt unter dem Gürtel und leuchtet bläulich-weiß"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/orion/outline.svg",
-                    "description": "Schematische Darstellung des Orion"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Orion war ein großer Jäger, der von einem Skorpion getötet wurde. Deswegen stehen beide nie gleichzeitig am Himmel!",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Markantestes Wintersternbild",
-                        "Enthält den roten Überriesen Betelgeuse",
-                        "Der \"verschwommene Fleck\" ist der berühmte Orionnebel"
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Betelgeuse hat 800x mehr Durchmesser als unsere Sonne",
-                        "Das sind 500.000.000 Sonnen - bist deppert!?",
-                        "Der Stern geht dem Ende zu und wird \"bald\" als Supernova explodieren (in ca. 1,5 Mio Jahren)",
-                        "Sidefact: Bellatrix (einer seiner Sterne) ist Namenspatin für Bellatrix Lestrange aus der Familie Black"
-                    ],
-                    "icon": "🧠"
-                },
-                "details2": {
-                    "title": "Psychologischer Aspekt",
-                    "subtitle": "Der \"Held\" als Archetyp (C.G. Jung)",
-                    "facts": [
-                        "Strebt nach Macht und Ehre",
-                        "Zeigt ungewöhnliche Vitalität",
-                        "Gibt niemals auf",
-                        "Schattenseite: Kann zu ehrgeizig werden"
-                    ],
-                    "icon": "Ψ👩‍🎓"
-                }
-            },
-        },
-        {
-            "id": "canis_major",
-            "name": "Großer Hund",
-            "alias": "Canis Major",
-            "difficulty": "mittel",
-            "coordinates": {
-                "centroid": {
-                    "x": 319.76,
-                    "y": 1071.23
-                },
-                "bounds": {
-                    "minX": 250.00,
-                    "minY": 997.50,
-                    "maxX": 388.67,
-                    "maxY": 1152.83,
-                    "width": 138.66,
-                    "height": 155.33
-                }
-            },
-            "puzzle": {
-                "text": "Des Jägers treuer Begleiter, mein Auge strahlt heller als alle anderen am Himmelszelt - wo bin ich?",
-                "hints": [
-                    "Verlängere die drei Gürtelsterne des Orion nach links unten",
-                    "Suche nach dem auffällig hell funkelnden Stern (Sirius)",
-                    "Bei guter Sicht erkennst du eine Hundeform mit Sirius als 'Hundehals'"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/canis_major/outline.svg",
-                    "description": "Schematische Darstellung des Großen Hundes"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Der treue Jagdhund des Orion. In vielen Kulturen wurde der Aufgang von Sirius als Zeichen für wichtige Ereignisse gedeutet, wie die Nilflut im alten Ägypten.",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Enthält Sirius, den hellsten Stern am gesamten Nachthimmel",
-                        "Sirius ist ein Doppelsternsystem",
-                        "Nur 8,6 Lichtjahre von der Erde entfernt"
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Der Name 'Sirius' bedeutet 'der Gleißende'",
-                        "Sirius B ist ein extrem dichter weißer Zwerg - etwa so schwer wie die Sonne aber nur so groß wie die Erde. Ein Teelöffel seiner Materie würde auf der Erde mehr als 5 Tonnen wiegen!",
-                        "Die 'Hundstage' im Sommer sind nach diesem Sternbild benannt"
-                    ],
-                    "icon": "🧠"
-                },
-                "details2": {
-                    "title": "Harry Potter Connection",
-                    "subtitle": "Sirius Black",
-                    "facts": [
-                        "Sirius Black wurde nach diesem hellsten Stern benannt",
-                        "Seine Animagus-Form als großer schwarzer Hund spiegelt das Sternbild wider",
-                        "Teil der Tradition des fürnehmen und gar alten Haus der Blacks, deren Mitglieder nach Sternen benannt werden:\
-                        Sirius, Bellatrix (Orion), Regulus (Löwe), Andromeda (Andromeda, lol), Arcturus (Bärenhüter)",
-                        "Wie der Stern als 'Leitstern' dient, wurde Sirius zu Harrys wichtigstem Mentor"
-                    ],
-                    "icon": "⚡"
-                }
+            } else {
+                this.currentLevel = 99; // Completion
             }
-        },
-        {
-            "id": "taurus",
-            "name": "Stier",
-            "alias": "Taurus",
-            "difficulty": "leicht",
-            "coordinates": {
-                "centroid": {
-                    "x": 646.39,
-                    "y": 863.67
-                },
-                "bounds": {
-                    "minX": 531.99,
-                    "minY": 770.82,
-                    "maxX": 734.32,
-                    "maxY": 936.15,
-                    "width": 202.33,
-                    "height": 165.33
-                }
-            },
-            "puzzle": {
-                "text": "Mit V-förmigen Hörnern und glühendem Auge starre ich den Jäger an. Über mir tanzen meine sieben himmlischen Beschützerinnen - kannst du mich aufspüren?",
-                "hints": [
-                    "Suche über dem Orion nach einer auffälligen V-Form aus Sternen",
-                    "Im V leuchtet ein heller rötlicher Stern (Aldebaran, das 'Auge')",
-                    "Darüber findest du einen markanten Sternhaufen (die Plejaden/Siebengestirn)"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/taurus/outline.svg",
-                    "description": "Schematische Darstellung des Stiers"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Der Stier erinnert an Zeus, der sich in einen weißen Stier verwandelte, um Europa zu entführen. Die Plejaden sind sieben Schwestern, die von Zeus vor dem Jäger Orion an den Himmel gerettet wurden.",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Die V-Form wird von den Hyaden gebildet, dem uns nächstgelegenen offenen Sternhaufen.",
-                        "Aldebaran ist ein roter Riese, der zufällig vor den Hyaden steht, aber nur halb so weit entfernt ist.",
-                        "Die Plejaden sind der bekannteste offene Sternhaufen am Himmel"
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Die Plejaden wurden schon in der Steinzeit in Höhlenmalereien dargestellt",
-                        "Sie dienten vielen Kulturen als Kalender für Aussaat und Ernte",
-                        "Die Plejaden sind ein traditioneller Sehtest vieler Kulturen. Wie viele Sterne siehst Du? 😏 (6? oder sogar 7?)"
-                    ],
-                    "icon": "🧠"
-                },
-                "details2": {
-                    "title": "Astrologische & Psychologische Aspekte",
-                    "subtitle": "Stier (20.4.-20.5.)",
-                    "facts": [
-                        "Als Erdzeichen steht der Stier für Beständigkeit und materielle Sicherheit",
-                        "Die Plejaden stehen für Gemeinschaft und Zusammenhalt. Einige Kulturen sehen in den Plejaden Symbole für Schutz und Familie",
-                    ],
-                    "icon": "♉"
-                }
+            
+            console.log('Spielstand geladen:', state);
+            return true;
+        }
+        return false;
+    }
+
+    // Zeige aktuellen Spielstand
+    showCurrentState() {
+        this.contentDiv.innerHTML = ''; // Clear current content
+
+        if(this.currentLevel === 98){
+            this.showBonusScreen()
+            this.nextButton.addEventListener('click', () => this.handleNextLevel());
+            return;
+        }
+
+        if(this.currentLevel === 99){
+            this.showCompletionScreen()
+            return;
+        }
+        
+        // Button-Event wieder anhängen
+        this.nextButton.addEventListener('click', () => this.handleNextLevel());
+        
+        // Aktuelles Level anzeigen
+        // Wichtig: Erst content generieren, dann Handler attachen
+        const content = this.generateLevelContent();
+        this.contentDiv.innerHTML = content;
+
+        // Warte bis DOM aktualisiert ist
+        setTimeout(() => {
+            this.attachLevelHandlers();
+        }, 100);
+    }
+
+    generateLevelContent() {
+        let content = '';
+        switch(this.currentLevel) {
+            case 1:
+                content = this.createLevel1();
+                break;
+            case 2:
+                content = this.createLevel2();
+                break;
+            case 3:
+                content = this.createLevel3();
+                break;
+            case 4:
+                content = this.createLevel4();
+                break;
+        }
+        return content;
+    }
+
+    attachLevelHandlers() {
+        if (this.currentLevel >= 1) {
+            this.initializeStarmap();
+        }
+
+        if (this.currentLevel >= 2) {
+            this.attachHintListeners();
+        }
+
+        if (this.currentLevel === 3) {
+            const overlaysContainer = document.getElementById('constellationOverlays');
+            if (overlaysContainer) {
+                this.updateConstellationOverlays();
+            } else {
+                console.warn('Overlays Container noch nicht bereit');
             }
-        },
-		{
-            "id": "bigdipper",
-            "name": "Großer Wagen",
-            "alias": "Big Dipper",
-            "difficulty": "sehr leicht",
-            "coordinates": {
-                "centroid": {
-                    "x": 470.14,
-                    "y": 317.71
-                },
-                "bounds": {
-                    "minX": 435.5,
-                    "minY": 187.5,
-                    "maxX": 497,
-                    "maxY": 394.5,
-                    "width": 61.5,
-                    "height": 207
+        }
+
+        // Cards sichtbar machen
+        const newCards = document.querySelectorAll('.card:not(.visible)');
+        newCards.forEach(card => card.classList.add('visible'));
+    }
+
+    initializeGame() {
+        this.nextButton.addEventListener('click', () => this.handleNextLevel());
+        this.currentLevel = 1;
+        this.showLevel();
+    }
+
+    // Erster Hinweis zunächst sichtbar, zwei und drei gesperrt.
+    initializeHintStates() {
+        this.hintStates = {
+            0: 'revealed',
+            1: 'locked',
+            2: 'locked'
+        };
+    }
+
+    // Nächste Stufe im selben Sternenbild
+    handleNextLevel() {
+        if (this.currentLevel < 4) {
+            this.currentLevel++;
+            this.showLevel();
+        } else if (this.currentLevel === 4) {
+            this.moveToNextConstellation();
+            this.saveGameState();  
+        }
+    }
+
+    showLevel() {
+        // Prüfe ob Level 3 bereits existiert (irgendwie wird es doppelt erstellt)
+        if (this.currentLevel === 3 && this.contentDiv.querySelector('.l3')) {
+            //console.log('Level 3 bereits vorhanden, überspringe Erstellung');
+            return;
+        }
+
+        const content = this.generateLevelContent();
+        this.contentDiv.innerHTML += content;
+
+        if (this.currentLevel >= 1) {
+            setTimeout(() => {
+                this.initializeStarmap();
+            }, 100);
+        }
+
+        if (this.currentLevel >= 2) {
+            this.attachHintListeners();
+        }
+
+        if (this.currentLevel === 3) {
+            this.updateConstellationOverlays();
+        }
+
+        // Alle neuen Cards für dieses Level sichtbar machen
+        setTimeout(() => {
+            this.attachLevelHandlers();
+        }, 100);
+    }
+
+// --- Challenge
+
+    createLevel1() {
+        this.nextButton.innerHTML = "Hinweise 👋"
+
+        const aliasName = this.constellation.alias 
+        ? `<div class="constellation-alias">Alias<br>${this.constellation.alias}</div>`
+        : '';
+
+        return `
+            <div class="card">
+                ${this.showProgress()}
+                <div class="constellation-title-wrapper">
+                    <div class="constellation-subtitle">Sternbild</div>
+                    <h2 class="constellation-title">${this.constellation.name}</h2>
+                    ${aliasName}
+                    <div class="constellation-subtitle">Schwierigkeitsgrad: ${this.constellation.difficulty}</div>
+                </div>
+                <div class="puzzle-text">${this.constellation.puzzle.text}</div>
+            </div>
+
+            <div class="card starmap-card">
+                <div class="starmap-container">
+                    <div class="starmap-controls">
+                        <button class="zoom-button" data-zoom="in">
+                            <span class="zoom-icon">+</span>
+                        </button>
+                        <button class="zoom-button" data-zoom="out">
+                            <span class="zoom-icon">-</span>
+                        </button>
+                        <button class="zoom-button" data-zoom="reset">
+                            <span class="zoom-icon">↺</span>
+                        </button>
+                    </div>
+                    <div class="starmap-controls-left">
+                        <button class="select-mode-button" id="selectionModeBtn" title="Sternbild markieren">
+                            <span class="select-icon">🎯</span>
+                        </button>
+                    </div>
+                    <div class="starmap-wrapper" id="starmapWrapper">
+                        <div class="starmap-layers" id="starmapLayers">
+                            <!-- Basis-Sternenkarte -->
+                            <img 
+                                src="./assets/starmap.png" 
+                                alt="Sternenkarte"
+                                class="starmap-image"
+                                id="starmapImage"
+                            >
+                            <!-- Container für SVG Overlays -->
+                            <div class="constellation-overlays" id="constellationOverlays">
+                                ${this.createConstellationOverlays()}
+                            </div>
+                        </div>
+                        <div class="selection-overlay" id="selectionOverlay" style="display: none">
+                            <div class="selection-box" id="selectionBox"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Sternenkarte mit Zoom-Funktionalität
+    initializeStarmap() {
+        const wrapper = document.getElementById('starmapWrapper');
+        const image = document.getElementById('starmapImage');
+        const layers = document.getElementById('starmapLayers');
+        const zoomButtons = document.querySelectorAll('.zoom-button');
+        
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let lastX, lastY;
+        let rafId = null;
+
+        // Selection Mode
+        let isSelectionMode = false;
+        let isDrawing = false;
+        let startX, startY;
+        const maxArea_rel = 0.06 // 6% der Kartenfläche
+        const selectionModeBtn = document.getElementById('selectionModeBtn');
+        const selectionOverlay = document.getElementById('selectionOverlay');
+        const selectionBox = document.getElementById('selectionBox');
+    
+        function updateImageTransform() {
+            requestAnimationFrame(() => {
+                // Nur eine Transformation auf den äußeren Container
+                const transform = `matrix(${scale}, 0, 0, ${scale}, ${pointX}, ${pointY})`;
+                layers.style.transform = transform;
+            });
+        }
+        
+        // Zoom-Buttons
+        zoomButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const action = button.dataset.zoom;
+                switch(action) {
+                    case 'in':
+                        scale *= 1.2;
+                        break;
+                    case 'out':
+                        scale = Math.max(1, scale / 1.2);
+                        break;
+                    case 'reset':
+                        scale = 1;
+                        pointX = 0;
+                        pointY = 0;
+                        break;
                 }
-            },
-            "puzzle": {
-                "text": "Sieben Sterne erschaffen meine Form, vier im Kasten, drei als Deichsel schwingend. Verlängere meine hintere Achse um das Fünffache nach oben und Du findest das Nordlicht!",
-                "hints": [
-                    "Suche nach vier Sternen, die ein Rechteck (den 'Wagenkasten') bilden",
-                    "Daran schließt sich ein 'Bogen' aus drei Sternen an (die 'Deichsel')",
-                    "Der Wagen dreht sich im Laufe der Nacht gegen den Uhrzeigersinn um den Polarstern"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/big_dipper/outline.svg",
-                    "description": "Schematische Darstellung des Großen Wagens"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Verschiedene Kulturen sehen hier verschiedene Dinge: Die Griechen einen Teil des Großen Bären, die nordamerikanischen Ureinwohner eine 'Große Schöpfkelle', in Europa sieht man einen Wagen und in China den 'Jade-Kaiserpalast'.",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Der Große Wagen ist eigentlich kein eigenes Sternbild - aber dazu später mehr 😉. Als 'zirkumpolares Asterismus' (🎓 flex) ist er das ganze Jahr über sichtbar.",
-                        "Fünf der sieben Sterne bewegen sich als Strom gemeinsam durchs All. Nur Dubhe und Alkaid tanzen aus der Reihe, wodurch sich die Form in etwa 50.000 Jahren auflösen wird. (oh nein 🆘)",
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Mizar & Alkor (der mittlere Deichselstern) sind der erste Doppelstern, der fotografiert wurde (1857).",
-						"Noch spannender: Mizar & Alkar sind selbst auch doppelt, und jeder dieser Sterne ist nochmal doppelt - ein Sechs-Sterne-System!",
-                        "Die Indianer prüften mit Mizar/Alcor das Sehvermögen ihrer Späher, die Römer testeten damit ihre Legionäre. Wer beide Sterne trennen kann, hat sehr gute Augen."
-                    ],
-                    "icon": "🧠"
-                },
-				"details2": {
-					"title": "Achtung: Unfug 😋",
-					"subtitle": "Stars behind the stars",
-					"facts": [
-						"Taylor Swift Reference: Der 'Shake it off'-Moment? Die beiden Sterne Dubhe und Merak tanzen literally aus der Reihe und machen ihr eigenes Ding!",
-						"Die alten Griechen nannten den Großen Wagen auch 'Helikes' (die sich Drehende) - quasi der erste astronomische Dance Move! (Puh, ich hoffe, das wird nie unsere Tanzgeschwindigkeit 🧓)"
-					],
-					"icon": "🌟"
-				}
+                updateImageTransform();
+            });
+        });
+            
+        // Mouse Events
+        wrapper.addEventListener('mousedown', handleDragStart);
+        wrapper.addEventListener('mousemove', handleDragMove);
+        wrapper.addEventListener('mouseup', handleDragEnd);
+        wrapper.addEventListener('mouseleave', handleDragEnd);
+        
+        // Touch Events
+        wrapper.addEventListener('touchstart', handleTouchStart, { passive: false });
+        wrapper.addEventListener('touchmove', handleTouchMove, { passive: false });
+        wrapper.addEventListener('touchend', handleDragEnd);
+        wrapper.addEventListener('touchcancel', handleDragEnd);
+    
+        // Gemeinsame Drag-Funktionen
+        function handleDragStart(e) {
+            e.preventDefault();
+            panning = true;
+            lastX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            lastY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            wrapper.style.cursor = 'grabbing';
+        }
+    
+        function handleDragMove(e) {
+            if (!panning) return;
+            
+            e.preventDefault();
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            const deltaX = clientX - lastX;
+            const deltaY = clientY - lastY;
+            
+            pointX += deltaX;
+            pointY += deltaY;
+            
+            lastX = clientX;
+            lastY = clientY;
+            
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                updateImageTransform();
+                rafId = null;
+            });
+        }
+    
+        function handleDragEnd() {
+            panning = false;
+            wrapper.style.cursor = 'grab';
+        }
+    
+        // Spezifische Touch-Handler
+        function handleTouchStart(e) {
+            if (e.touches.length === 1) {
+                handleDragStart(e);
+            } else if (e.touches.length === 2) {
+                // Pinch-to-zoom Start
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                lastPinchDistance = getPinchDistance(touch1, touch2);
             }
-        },
-		{
-			"id": "cassiopeia",
-			"name": "Cassiopeia",
-			"alias": "Die Königin",
-			"difficulty": "leicht",
-            "coordinates": {
-                "centroid": {
-                    "x": 789.18,
-                    "y": 568.31
-                },
-                "bounds": {
-                    "minX": 745.49,
-                    "minY": 545.99,
-                    "maxX": 821.49,
-                    "maxY": 577.99,
-                    "width": 76,
-                    "height": 32
+        }
+    
+        function handleTouchMove(e) {
+            e.preventDefault(); // Verhindert Scrolling der Seite
+            if (e.touches.length === 1) {
+                handleDragMove(e);
+            } else if (e.touches.length === 2) {
+                // Pinch-to-zoom
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = getPinchDistance(touch1, touch2);
+                
+                if (lastPinchDistance) {
+                    const delta = currentDistance - lastPinchDistance;
+                    if (Math.abs(delta) > 1) {
+                        const newScale = scale * (1 + delta / 100);
+                        scale = Math.min(Math.max(1, newScale), 5);
+                        updateImageTransform();
+                    }
                 }
-            },
-			"puzzle": {
-				"text": "Ein königlicher Thron? Ein gestürztes M? Meine fünf hellsten Juwelen tanzen ewig um den Polarstern - erkennst du meine himmlische Choreo?",
-				"hints": [
-					"Suche gegenüber vom Großen Wagen (auf der anderen Seite des Polarsterns) nach einer auffälligen W- oder M-Form",
-					"Die fünf hellen Sterne sind etwa gleich hell und bilden ein regelmäßiges Zickzack",
-					"Das Sternbild steht nie unter dem Horizont (zirkumpolar), rotiert aber um den Polarstern - mal als W, mal als M"
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/cassiopeia/outline.svg",
-					"description": "Schematische Darstellung der Cassiopeia"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Cassiopeia war eine eitle Königin, die behauptete, sie und ihre Tochter Andromeda seien schöner als die Meernymphen. Zur Strafe für ihren Hochmut wurde sie von Poseidon an den Himmel verbannt, wo sie nun kopfüber um den Pol kreist - eine ewige Mahnung gegen Überheblichkeit.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Als zirkumpolares Sternbild ist Cassiopeia das ganze Jahr über sichtbar. Sie rotiert in 23 Stunden und 56 Minuten einmal um den Polarstern, wobei sich ihre Form von einem W zu einem M und wieder zurück wandelt.",
-						"Das Sternbild liegt in einem besonders hellen Teil der Milchstraße. Mit bloßem Auge sind bei klarem Himmel zahlreiche Sternhaufen als neblige Flecken zu erkennen.",
-						"In der modernen Astronomie dient Cassiopeia als wichtiger 'Wegweiser' am Himmel: Durch ihre markante Form und die Position nahe dem Polarstern hilft sie bei der Orientierung - eine ironische Wendung für die einst so eitle Königin."
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Himmlisches Drama",
-					"subtitle": "Keeping Up With The Cassiopeias",
-					"facts": [
-						"Stell dir vor: Eine überhebliche Queen (Cassiopeia), die ständig über Social Media ihr 'perfect life' und ihre 'perfect daughter' (Andromeda) präsentiert und dabei die Meernymphen-Influencer beleidigt 💅",
-						"Plot Twist: Die Meernymphen haben bessere Connections (zu Poseidon höchstpersönlich!) und starten einen massiven Callout 😱",
-						"Der eigentliche Tea: Cassiopeias Tochter Andromeda muss für den toxischen Behavior ihrer Mutter bezahlen - red flag alert! 🚩",
-						"Der Hero-Edit geht an Perseus, der wie der perfekte Bachelor-Kandidat mit Schwert und Sixpack zur Rettung eilt 💪"
-					],
-					"icon": "📺🌞"
-				},
-				"details2": {
-					"title": "Behind The Scenes",
-					"subtitle": "Die ungezeigte Story",
-					"facts": [
-						"Produzent Zeus arranged das komplette Drama und castet gezielt problematische Characters - typisch Reality-TV 🎭",
-						"Andromeda bekommt den Sympathie-Edit als 'unschuldiges Opfer', während Cassiopeia als klassische Reality-TV-Villian dargestellt wird",
-						"Aber plot twist: In der Spinoff-Serie 'Life After Drama' zeigt sich, dass auch Cassiopeia eine vulnerable Seite hat - sie kämpft mit Perfektionismus und gesellschaftlichem Druck 💫",
-						"Das Finale mit der 'ewigen Strafe' (kopfüber am Himmel kreisen) ist peak Drama - aber hey, wenigstens ist sie jetzt literally ein Star! ⭐"
-					],
-					"icon": "🎬"
-				}
-			}
-		},
-		{
-		   "id": "ursa-major",
-		   "name": "Großer Bär",
-		   "alias": "Ursa Major",
-		   "difficulty": "mittel-schwer",
-	       "coordinates": {
-				"centroid": {
-					"x": 430.92,
-					"y": 396.92
-				},
-				"bounds": {
-					"minX": 244.5,
-					"minY": 187.5,
-					"maxX": 507,
-					"maxY": 533.5,
-					"width": 262.5,
-					"height": 346
-				}
-			},
-		   "puzzle": {
-			   "text": "Der Große Wagen ist nur mein hellster Teil - findest du meinen Kopf und meine Tatzen, die das komplette Bärenbild formen?",
-			   "hints": [
-				   "Starte beim Großen Wagen - er bildet Rücken und Schwanz des Bären",
-				   "Vom 'Wagenkasten' aus findest du schwächere Sterne, die in drei Bögen die 'Bärentatzen' bilden",
-				   "Vom vorderen 'Wagenkasten' führt eine Reihe schwächerer Sterne zum 'Kopf' des Bären"
-			   ],
-			   "emergencyHint": {
-				   "imageUrl": "/constellations/ursa_major/outline.svg",
-				   "description": "Schematische Darstellung des Großen Bären"
-			   }
-		   },
-		   "basics": {
-			   "mythology": {
-				   "title": "Mythologie",
-				   "text": "Der griechischen Sage nach ist es Kallisto, eine Nymphe, die von der eifersüchtigen Hera in einen Bären verwandelt wurde. Zeus setzte sie zusammen mit ihrem Sohn (dem Kleinen Bären) an den Himmel.",
-				   "icon": "🖼️"
-			   },
-			   "astronomy": {
-				   "title": "Wichtigste astronomische Fakten",
-				   "facts": [
-					   "Der Große Bär ist mit 1280 Quadratgrad das drittgrößte Sternbild des Himmels.",
-					   "Im Sternbild befinden sich die berühmten Galaxien M81 und M82, die schon im Fernglas als nebelhafte Flecken zu sehen sind. Sie wechselwirken gravitativ miteinander."
-				   ],
-				   "icon": "🌟"
-			   }
-		   },
-		   "details": {
-			   "details1": {
-				   "title": "Spannende Details",
-				   "facts": [
-					   "Weird Sidenote: Die Geschichte der Kallisto zeigt ein häufiges Muster in der Mythologie: Frauen werden für das Verhalten der Männer bestraft - ein früher Beleg für systemischen Sexismus.",
-					   "Interessanter Perspektivwechsel ist die Transformation: Statt die Bärengestalt als Strafe zu sehen, kann man sie als Symbol für weibliche Stärke und Naturverbundenheit interpretieren",
-					   "Das Sternbild enthält ein einzigartiges Objekt: Den 'Eulennebel' M97, einen planetarischen Nebel, dessen dunkle 'Augen' ihm sein charakteristisches Aussehen geben."
-				   ],
-				   "icon": "🧠"
-			   },
-			   "details2": {
-				   "title": "Kulturelle & Historische Bedeutung",
-				   "subtitle": "Ein Sternbild, viele Deutungen",
-				   "facts": [
-					   "In China war der Bereich des 'Bärenkopfes' als 'Himmlischer Jade-Palast' bekannt.",
-					   "Die Form eines Bären findet sich überraschenderweise sowohl bei nordamerikanischen Ureinwohnern als auch bei den alten Griechen - eine der wenigen identischen Deutungen über Kontinente hinweg.",
-				   ],
-				   "icon": "🌏"
-			   }
-		   }
-		},
-		{
-			"id": "ursa-minor",
-			"name": "Kleiner Bär",
-			"alias": "Ursa Minor",
-			"difficulty": "mittel-leicht",
-			"coordinates": {
-				"centroid": {
-					"x": 665.07,
-					"y": 357.21
-				},
-				"bounds": {
-					"minX": 638,
-					"minY": 307.5,
-					"maxX": 681,
-					"maxY": 434.5,
-					"width": 43,
-					"height": 127
-				}
-			},
-			"puzzle": {
-				"text": "Meine Deichsel zeigt zum Pol, mein hellster Stern ist Seeleuten treu - eine kleinere Version meines großen Bruders bin ich. Wer versteckt sich im Schatten des Großen Bären?",
-				"hints": [
-					"Finde zuerst den Polarstern mit Hilfe des Großen Wagens (Verlängerung der 'Pointer Stars')",
-					"Der Polarstern bildet die Schwanzspitze des Kleinen Bären",
-					"Von dort aus siehst du eine kleine 'Wagenform' aus schwächeren Sternen - wie ein blasseres Spiegelbild des Großen Wagens"
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/ursa_minor/outline.svg",
-					"description": "Schematische Darstellung des Kleinen Bären"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Nach der griechischen Sage ist es Arktos, der in einen Bären verwandelte Sohn der Kallisto (Großer Bär). Zeus setzte beide an den Himmel, wo sie nun endlos um den Himmelspol kreisen - für immer vereint, aber nie vereinigt.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Der Polarstern (Polaris) ist nur zufällig nah am Himmelsnordpol. Aufgrund der Veränderung der Erdachse (Präzession) wird in schon 13.000 Jahren Wega der neue Polarstern sein. (Also wirds Zeit Wega zu lernen!)",
-						"Polaris ist ein dreifaches Sternsystem: Ein heller Hauptstern mit zwei kleineren Begleitern. Er ist auch ein veränderlicher Stern, dessen Helligkeit leicht schwankt.",
-						"Der Kleine Bär steht 'kopfüber' im Vergleich zum Großen Bären - ihre Schwänze zeigen in entgegengesetzte Richtungen."
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Spannende Details",
-					"facts": [
-						"Der Polarstern ist nicht der hellste Stern am Nordhimmel (das ist Capella), aber der allerwichtigste für die Navigation - ein kosmischer Fixpunkt in einer sich drehenden Welt.",
-					],
-					"icon": "🧠"
-				},
-				"details2": {
-					"title": "Navigation & Kurioses",
-					"subtitle": "Der Anker des Nordhimmels",
-					"facts": [
-						"Es ist ein kosmischer Zufall (mögen wir Zufälle? 🤔), dass wir gerade jetzt einen so guten Polarstern haben - in der Geschichte der Menschheit ist das eher die Ausnahme als die Regel.",
-						"In den Zeiten der 'Underground Railroad' in Amerika wurde der Polarstern zum Symbol der Freiheit - er zeigte entflohenen Sklaven den Weg nach Norden.",
-						"Es gibt einen Ort an Land, an dem der Polarstern direkt über Dir steht: die kleine norwegische Insel Vikingen auf 66,5° nördlicher Breite - ein beliebtes Ziel für Astronomie-Touris."
-					],
-					"icon": "🧭"
-				}
-			}
-		},
-		{
-		   "id": "pegasus",
-		   "name": "Pegasus",
-		   "alias": "Das geflügelte Pferd",
-		   "difficulty": "mittel",
-		   "coordinates": {
-				"centroid": {
-					"x": 1079.14,
-					"y": 631.77
-				},
-				"bounds": {
-					"minX": 951.97,
-					"minY": 508.48,
-					"maxX": 1247.63,
-					"maxY": 766.14,
-					"width": 295.66,
-					"height": 257.66
-				}
-			},
-		   "puzzle": {
-			   "text": "Ein großes Quadrat am Herbsthimmel bildet meinen Körper, ein geschwungener Sternenbogen formt meinen Hals - welches mythische Wesen galoppiert durch die Herbstnacht?",
-			   "hints": [
-				   "Suche nach einem auffälligen Quadrat aus vier etwa gleich hellen Sternen - das 'Große Herbstviereck'",
-				   "Einer der Ecksterne (Alpheratz) gehört eigentlich schon zur Andromeda",
-				   "Von einer anderen Ecke aus erstreckt sich ein Bogen aus Sternen - der 'Hals' des Pferdes"
-			   ],
-			   "emergencyHint": {
-				   "imageUrl": "/constellations/pegasus/outline.svg",
-				   "description": "Schematische Darstellung des Pegasus"
-			   }
-		   },
-		   "basics": {
-			   "mythology": {
-				   "title": "Mythologie",
-				   "text": "Pegasus entsprang dem Blut der Medusa, als Perseus ihr den Kopf abschlug. Das geflügelte Pferd half später dem Helden Bellerophon im Kampf gegen die Chimäre. Zeus versetzte es schließlich an den Himmel, wo es nun kopfüber steht.",
-				   "icon": "🖼️"
-			   },
-			   "astronomy": {
-				   "title": "Wichtigste astronomische Fakten",
-				   "facts": [
-					   "Das Große Herbstviereck ist eines der auffälligsten geometrischen Muster am Himmel. Seine Sterne liegen zwischen 100 und 1000 Lichtjahren entfernt.",
-					   "Der hellste Stern Enif (arabisch für 'Nase') ist ein orangefarbener Überriese, der 12.000-mal heller leuchtet als unsere Sonne."
-				   ],
-				   "icon": "🌟"
-			   }
-		   },
-		   "details": {
-			   "details1": {
-				   "title": "Spannende Details",
-				   "facts": [
-					   "Das Pegasus-Quadrat ist so groß, dass 15 Vollmonde nebeneinander hineinpassen würden - ein beliebter Vergleich, um Himmelsgrößen zu veranschaulichen.",
-					   "Der Stern IK Pegasi ist mit 150 Lichtjahren das uns nächstgelegene potentielle Supernova-System - aber keine Sorge, die Entfernung ist sicher genug!"
-				   ],
-				   "icon": "🧠"
-			   },
-			   "details2": {
-				   "title": "Beobachtung & Geschichte",
-				   "subtitle": "Herbstlicher Wegweiser",
-				   "facts": [
-					   "Das Pegasus-Quadrat ist ein wichtiger 'Wegweiser' zu Andromeda: Von der nordöstlichen Ecke des Quadrats führt eine Sternenkette zur berühmten Andromedagalaxie.",
-					   "Die Araber sahen kein Pferd, sondern ein großes Zelt - die vier hellen Sterne als Zeltpfosten. (Also ich sehe da eine Ritter Sport 🍫😋)",
-					   "In der antiken Seefahrt markierte der Aufgang des Pegasus die letzte Phase der sicheren Schifffahrtssaison im Mittelmeer. (nicht, dass man dann noch über den Rand der Welt fällt 🆘)"
-				   ],
-				   "icon": "🔭"
-			   }
-		   }
-		},
-		{
-            "id": "andromeda",
-            "name": "Andromeda",
-            "alias": "Die Gefesselte",
-            "difficulty": "mittel",
-            "coordinates": {
-                "centroid": {
-                    "x": 885.85,
-                    "y": 664.21
-                },
-                "bounds": {
-                    "minX": 787.33,
-                    "minY": 557.5,
-                    "maxX": 951,
-                    "maxY": 754.5,
-                    "width": 163.67,
-                    "height": 197
-                }
-            },
-            "puzzle": {
-                "text": "Angekettet zwischen Mutter und Held, beherberge ich die fernste Schönheit, die dein Auge erblicken kann - welche Prinzessin bin ich?",
-                "hints": [
-                    "Suche von der Cassiopeia (dem W) ausgehend nach einer Kette hellerer Sterne",
-                    "Der hellste Teil ist ein längliches, schwach leuchtendes 'Wölkchen' - die Andromedagalaxie",
-                    "Die Hauptsterne bilden eine leicht geknickte Linie, die von Cassiopeia 'wegzeigt'"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/andromeda/outline.svg",
-                    "description": "Schematische Darstellung der Andromeda"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Andromeda, Tochter der Cassiopeia, wurde zur Strafe für den Hochmut ihrer Mutter an einen Felsen gekettet und einem Seeungeheuer geopfert. Perseus rettete sie im letzten Moment und machte sie zu seiner Frau.",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Die Andromedagalaxie (M31) ist mit 2,5 Millionen Lichtjahren Entfernung das fernste Objekt, das man mit bloßem Auge sehen kann (wenn man kann 👓). Sie enthält etwa eine Billion Sterne!",
-                        "Unsere Milchstraße und die Andromedagalaxie bewegen sich aufeinander zu und werden in etwa 4,5 Milliarden Jahren verschmelzen.",
-                        "Die Hauptsterne von Andromeda bilden eine charakteristische Kette, die die 'Ketten' der gefesselten Prinzessin darstellt."
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Andromeda ist die erste erkannte 'Sterneninsel' außerhalb unserer Milchstraße (Edwin Hubble 1923).",
-                        "Die Galaxie ist bereits 6-mal so groß am Himmel wie der Vollmond, erscheint uns aber viel kleiner, weil sie so lichtschwach ist.",
-                    ],
-                    "icon": "🧠"
-                },
-                "details2": {
-                    "title": "Psychologie & Symbolik",
-                    "subtitle": "Familie, Bindung und Entwicklung",
-                    "facts": [
-                        "Die Geschichte thematisiert den entwicklungs-psychologisch wichtigen Prozess der Ablösung von den Eltern - wenn auch in (minimal) dramatischer Form.",
-                        "Der Name 'Andromeda' bedeutet 'die über Männer Herrschende' - ein interessanter Kontrast zu ihrer scheinbar passiven Rolle.",
-                        "Die Rettung durch Perseus kann die Bedeutung sozialer Unterstützung bei der Überwindung von Krisen symbolisieren. (Man kann nicht immer alles alleine schaffen würden ältere Menschen jetzt sagen 🧓)",
-                    ],
-                    "icon": "🧠"
-                }
+                lastPinchDistance = currentDistance;
             }
-        },
-		{
-			"id": "perseus",
-			"name": "Perseus",
-			"alias": "Der Held",
-			"difficulty": "mittel",
-			"coordinates": {
-				"centroid": {
-					"x": 694.94,
-					"y": 692.19
-				},
-				"bounds": {
-					"minX": 654.24,
-					"minY": 625.98,
-					"maxX": 738.48,
-					"maxY": 767.48,
-					"width": 84.23,
-					"height": 141.5
-				}
-			},
-			"puzzle": {
-				"text": "Mit erhobenem Schwert und Medusas Haupt stehe ich zwischen Cassiopeia und dem Stier. Mein hellster Stern blinzelt regelmäßig - findest du den Helden?",
-				"hints": [
-					"Suche unterhalb von Cassiopeia nach einer Reihe mittelheller Sterne",
-					"Der auffälligste Stern (Algol) blinkt alle 2,8 Tage und ist leicht zu erkennen",
-					"Von Cassiopeia aus findest du eine Kette von Sternen, die wie ein umgedrehtes 'Y' aussieht"
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/perseus/outline.svg",
-					"description": "Schematische Darstellung des Perseus"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Perseus ist der Held, der Andromeda (Tochter der Cassiopeia) rettete. Mit dem abgeschlagenen Haupt der Medusa versteinerte er das Seeungeheuer Cetus, das Andromeda bedrohte.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Der Stern Algol ('Dämonenstern') blinzelt! Alle 2,87 Tage wird der hellere Stern vom dunkleren teilweise verdeckt, wodurch seine Helligkeit deutlich abnimmt.",
-						"Der Perseus-Doppelsternhaufen (h und χ Persei) ist mit bloßem Auge nur als verwaschener Fleck zu sehen. Im Fernglas löst er sich in zwei prachtvolle Sternhaufen auf! (#GLOW-UP ✨) 🔭",
-						"Immer im August scheinen aus Perseus die Perseiden zu regnen - einer toller Meteorstrom für laue Nächte."
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Spannende Details",
-					"facts": [
-						"Der Name Algol kommt aus dem Arabischen und bedeutet 'Ghul' oder 'Dämon'. Die alten Astronomen bemerkten sein regelmäßiges 'Blinzeln' und hielten es für unheimlich.",
-						"Die Perseiden entstehen, wenn die Erde die Staubspur des Kometen Swift-Tuttle kreuzt (für mich gibts nur ein SWIFT!!! 🙄). Mit bis zu 100 Sternschnuppen pro Stunde sind sie das populärste astronomische Sommerereignis.",
-					],
-					"icon": "🧠"
-				},
-				"details2": {
-					"title": "Perseus in Kultur & Medien",
-					"subtitle": "Von Antike bis Alohomora",
-					"facts": [
-						"Das 'Blinken' von Algol wurde in alten arabischen Texten mit dem unheimlichen Blinzeln des Medusenhauptes verglichen - eine erstaunlich präzise Beschreibung des astronomischen Phänomens.",
-						"Die Geschichte von Perseus inspirierte das Konzept des 'Monomythos' (Heldenreise) - ein Grundmuster, das sich in Geschichten von Star Wars bis Harry Potter wiederfindet."
-					],
-					"icon": "🎬"
-				}
-			}
-		},
-		{
-			"id": "gemini",
-			"name": "Zwillinge",
-			"alias": "Gemini",
-			"difficulty": "mittel",
-			"coordinates": {
-				"centroid": {
-					"x": 426.46,
-					"y": 744.31
-				},
-				"bounds": {
-					"minX": 373,
-					"minY": 682.5,
-					"maxX": 500.5,
-					"maxY": 826.5,
-					"width": 127.5,
-					"height": 144
-				}
-			},
-			"puzzle": {
-				"text": "Zwei strahlende Köpfe, Brüder in ewiger Harmonie, ihre Körper wie gespiegelt am schwarzen Firmament - welches Paar sucht dein Blick?",
-				"hints": [
-					"Suche östlich vom Stier nach zwei auffällig hellen, fast gleich hellen Sternen",
-					"Die beiden Hauptsterne (Castor und Pollux) bilden die 'Köpfe' der Zwillinge",
-					"Von den Köpfen aus erstrecken sich parallel verlaufende Sternreihen als 'Körper'"
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/gemini/outline.svg",
-					"description": "Schematische Darstellung der Zwillinge"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Castor und Pollux waren Zwillingsbrüder: Pollux unsterblich (Sohn des Zeus), Castor sterblich. Als Castor starb, teilte Pollux seine Unsterblichkeit mit ihm - seitdem verbringen sie abwechselnd je einen Tag im Himmel und in der Unterwelt.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Um Pollux wurde ein Planet entdeckt 🌏 - ein sogenannter Exoplanet, also ein Planet außerhalb unseres Sonnensystems. (ALIENS?? 👽)",
-						"Im Dezember jeden Jahres scheinen aus diesem Sternbild die Geminiden zu regnen (vormerken! 📅) - ein Meteorstrom, bei dem bis zu 120 Sternschnuppen pro Stunde zu sehen sind. Tipp: Suche bei Castor!"
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Spannende Details",
-					"facts": [
-						"Pollux ist der nächstgelegene Riesenstern zur Erde (unsere Sonne ist ein gelber Zwerg). Seine orange Farbe zeigt, dass er sich im Herbst seines Sternenlebens befindet.",
-						"Die Geminiden sind anders als die meisten Meteorströme: Sie stammen nicht von einem Kometen, sondern von einem mysteriösen (😱) Asteroiden namens Phaethon.",
-						"Die Geminiden werden jedes Jahr stärker - vor 150 Jahren waren sie noch kaum zu sehen, heute sind sie der verlässlichste und reichste Meteorstrom des Jahres!"
-					],
-					"icon": "🧠"
-				},
-				"details2": {
-					"title": "Zwillinge in Wissenschaft & Kultur",
-					"subtitle": "Faszination Doppelt",
-					"facts": [
-						"Die NASA nutzte eineiige Zwillinge für Studien zur Weltraumforschung: Ein Zwilling blieb auf der Erde, während der andere zur ISS flog. Die Ergebnisse überschlagen sich! (zum nachlesen 😉)",
-						"Zwillinge entwickeln oft eigene Sprachen - diese 'Kryptophasie' fasziniert Linguisten seit Jahrzehnten! 🦹‍♂️🦹‍♂️",
-					],
-					"icon": "🔬"
-				}
-			}
-		},
-		{
-			"id": "leonidas_magnus",
-			"name": "Leonidas Magnus",
-			"alias": "Leon der Große",
-			"difficulty": "EASYPEASY",
-			"coordinates": {
-				"centroid": {
-					"x": 908.82,
-					"y": 275.6
-				},
-				"bounds": {
-					"minX": 760.66,
-					"minY": 114.61,
-					"maxX": 1053.99,
-					"maxY": 438.6,
-					"width": 293.33,
-					"height": 324
-				}
-			},
-			"puzzle": {
-				"text": "",
-				"hints": [
-					"",
-					"",
-					""
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/leonidas_magnus/outline.svg",
-					"description": "Schematische Darstellung des Leonidas Magnus"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Der Legende nach erschuf Zeus dieses Sternbild, als er sah, wie ein junger Held nicht nur körperliche Stärke zeigte (wie die typischen Helden), sondern auch emotionale Intelligenz und Empathie. Besonders beeindruckt war Zeus davon, wie der Held seine Geliebte in ihren Träumen unterstützte und ihr Notizen der Ermutigung schrieb. In den antiken Schriften wird er als bescheidener Held beschrieben, der die Künste der Küche ebenso meisterte wie die des Tanzes - eine seltene Kombination, die selbst die Götter erstaunte.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Der hellste Stern des Sternbilds, 'Cor Leonis' (Herz des Leon), ist ein besonderer veränderlicher Stern - seine Helligkeit pulsiert im 4/4-Takt, perfekt für 'Karma' von Taylor Swift",
-						"Ein mysteriöser Nebel umgibt das Sternbild, der einen ungewöhnlich angenehmen Duft verströmt - Astronomen vermuten eine bisher unentdeckte kosmische Duftsignatur",
-						"Das Sternbild ist bekannt für sein stilvolles Erscheinungsbild - die Anordnung der Sterne folgt einem fast modischen Muster"
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Spannende Details",
-					"subtitle": "Himmlische Talente",
-					"facts": [
-						"In der Nähe des Sternbilds befindet sich der 'Culinary Nebula', bekannt für zwei besonders helle Spots: Den 'Chocolate Nova' (berühmt für seinen dunklen Glanz wie perfekt gebackener Schokokuchen) und die 'Banana Nebula' (mit charakteristischen Streifen wie perfektes Bananenbrot)",
-						"Der Sternhaufen 'NGC-Fungi' in der Nähe erinnert an eine perfekt geschichtete Pilzlasagne - ein beliebtes Ziel gleichwohl für vegetarische und vegane Astronomen",
-						"Die Bewegungsbahn der Hauptsterne beschreibt eine elegante Hüftschwung-Kurve, die Astrophysiker als 'gravitational dance pattern eines wohlgeformten Hinterteils' bezeichnen"
-					],
-					"icon": "🧠"
-				},
-				"details2": {
-					"title": "Psychologische Bedeutung",
-					"subtitle": "Archetyp des empathischen Beschützers",
-					"facts": [
-						"Jung hätte seine Freude: Hier verschmelzen die Archetypen des 'weisen Mentors' und des 'liebenden Beschützers' zu etwas Neuem",
-						"Das Sternbild verkörpert die seltene Kombination von Stärke und Sensibilität - ein kosmisches Beispiel für moderne Männlichkeit",
-						"Trotz seiner beeindruckenden Erscheinung zeigt das Sternbild eine bemerkenswerte 'astronomische Bescheidenheit' - es überstrahlt nie seine Nachbarn"
-					],
-					"icon": "👩‍🎓"
-				}
-			}
-		}
-    ]
-};
+        }
+    
+        // Hilfsfunktion für Pinch-to-zoom
+        let lastPinchDistance = null;
+        function getPinchDistance(touch1, touch2) {
+            return Math.hypot(
+                touch1.clientX - touch2.clientX,
+                touch1.clientY - touch2.clientY
+            );
+        }
+        
+        // Zoom mit Mausrad
+        wrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const rect = wrapper.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const oldScale = scale;
+            
+            if (e.deltaY < 0) {
+                scale = Math.min(scale * 1.1, 5);
+            } else {
+                scale = Math.max(1, scale / 1.1);
+            }
+            
+            if (scale !== oldScale) {
+                const scaleChange = scale - oldScale;
+                pointX -= mouseX * (scaleChange / oldScale);
+                pointY -= mouseY * (scaleChange / oldScale);
+                
+                requestAnimationFrame(() => {
+                    updateImageTransform();
+                });
+            }
+        }, { passive: false });
+
+
+        // Toggle Selection Mode
+        selectionModeBtn.addEventListener('click', () => {
+            isSelectionMode = !isSelectionMode;
+            selectionModeBtn.classList.toggle('active');
+            selectionOverlay.style.display = isSelectionMode ? 'block' : 'none';
+                    
+            // Reset der Selection Box
+            selectionBox.style.width = '0';
+            selectionBox.style.height = '0';
+            selectionBox.style.left = '0';
+            selectionBox.style.top = '0';
+            selectionBox.classList.remove('invalid-size');
+            isDrawing = false;  // Stelle sicher, dass der Zeichenmodus zurückgesetzt ist
+
+            // Disable all pan/zoom events when in selection mode
+            if (isSelectionMode) {
+
+                // Zoom-Buttons - deaktiviere EventListener
+                zoomButtons.forEach(button => {
+                    // Speichere den alten Click-Handler
+                    button._oldClickHandler = button.onclick;
+                    button.onclick = null;
+                    // Visuelles Feedback
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                });
+
+                wrapper.removeEventListener('mousedown', handleDragStart);
+                wrapper.removeEventListener('mousemove', handleDragMove);
+                wrapper.removeEventListener('mouseup', handleDragEnd);
+                wrapper.removeEventListener('mouseleave', handleDragEnd);
+                wrapper.removeEventListener('touchstart', handleTouchStart);
+                wrapper.removeEventListener('touchmove', handleTouchMove);
+                wrapper.removeEventListener('touchend', handleDragEnd);
+
+            } else {
+                // Re-enable all events when leaving selection mode
+
+                // Stelle die Event-Listener der Zoom-Buttons wieder her
+                zoomButtons.forEach(button => {
+                    button.onclick = button._oldClickHandler;
+                    button.style.opacity = '1';
+                    button.style.cursor = 'pointer';
+                });
+
+                wrapper.addEventListener('mousedown', handleDragStart);
+                wrapper.addEventListener('mousemove', handleDragMove);
+                wrapper.addEventListener('mouseup', handleDragEnd);
+                wrapper.addEventListener('mouseleave', handleDragEnd);
+                wrapper.addEventListener('touchstart', handleTouchStart);
+                wrapper.addEventListener('touchmove', handleTouchMove);
+                wrapper.addEventListener('touchend', handleDragEnd);
+
+            }
+
+        });
+
+        // Selection Box Drawing
+        selectionOverlay.addEventListener('mousedown', (e) => {
+            if (!isSelectionMode) return;
+            isDrawing = true;
+            const rect = selectionOverlay.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            
+            selectionBox.style.left = `${startX}px`;
+            selectionBox.style.top = `${startY}px`;
+            selectionBox.style.width = '0';
+            selectionBox.style.height = '0';
+
+            //console.log("Start bei x" + startX + "\n und bei y" + startY)
+        });
+
+        selectionOverlay.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            
+            const rect = selectionOverlay.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            const width = currentX - startX;
+            const height = currentY - startY;
+            
+            const validation = validateSelectionSize(width, height, scale);
+    
+            if (!validation.isValid) {
+                selectionBox.classList.add('invalid-size');
+            } else {
+                selectionBox.classList.remove('invalid-size');
+            }
+
+            selectionBox.style.width = `${Math.abs(width)}px`;
+            selectionBox.style.height = `${Math.abs(height)}px`;
+            selectionBox.style.left = `${width < 0 ? currentX : startX}px`;
+            selectionBox.style.top = `${height < 0 ? currentY : startY}px`;
+
+
+            // console.log('Selection Debug:', {
+            //     scale,
+            //     width,
+            //     height,
+            //     currentSelectionArea: Math.abs(width * height),
+            //     selectionAreaNormalized: selectionArea,
+            //     maxArea,
+            //     originalArea,
+            //     relativeSize: (selectionArea / originalArea) * 100 + '%',
+            //     dimensions: {
+            //         originalWidth: ORIGINAL_WIDTH,
+            //         originalHeight: ORIGINAL_HEIGHT,
+            //         currentWidth: width,
+            //         currentHeight: height,
+            //         normalizedWidth: width / scale,
+            //         normalizedHeight: height / scale
+            //     }
+            // });
+
+        });
+
+        selectionOverlay.addEventListener('mouseup', () => {
+            if (!isDrawing) return;
+            isDrawing = false;
+
+            // Hier später: Prüfe, ob Sternbild in Auswahl liegt
+            this.handleSelectionComplete()
+        });
+
+        // Touch-Events für Selection Box
+        selectionOverlay.addEventListener('touchstart', (e) => {
+            if (!isSelectionMode) return;
+            isDrawing = true;
+            const touch = e.touches[0];
+            const rect = selectionOverlay.getBoundingClientRect();
+            startX = touch.clientX - rect.left;
+            startY = touch.clientY - rect.top;
+            
+            selectionBox.style.left = `${startX}px`;
+            selectionBox.style.top = `${startY}px`;
+            selectionBox.style.width = '0';
+            selectionBox.style.height = '0';
+        }, { passive: false });
+
+        selectionOverlay.addEventListener('touchmove', (e) => {
+            if (!isDrawing) return;
+            e.preventDefault(); // Verhindert Scrollen
+            
+            const touch = e.touches[0];
+            const rect = selectionOverlay.getBoundingClientRect();
+            const currentX = touch.clientX - rect.left;
+            const currentY = touch.clientY - rect.top;
+            const width = currentX - startX;
+            const height = currentY - startY;
+            
+            const validation = validateSelectionSize(width, height, scale);
+    
+            if (!validation.isValid) {
+                selectionBox.classList.add('invalid-size');
+            } else {
+                selectionBox.classList.remove('invalid-size');
+            }
+            
+            selectionBox.style.width = `${Math.abs(width)}px`;
+            selectionBox.style.height = `${Math.abs(height)}px`;
+            selectionBox.style.left = `${width < 0 ? currentX : startX}px`;
+            selectionBox.style.top = `${height < 0 ? currentY : startY}px`;
+        }, { passive: false });
+
+
+        selectionOverlay.addEventListener('touchend', () => {
+            isDrawing = false;
+            this.handleSelectionComplete()
+        });
+
+        // Neue Hilfsfunktion für die Größenvalidierung
+        function validateSelectionSize(width, height, scale) {
+            const rect = document.getElementById('starmapImage').getBoundingClientRect();
+            const currentImageArea = rect.width * rect.height;
+            const maxArea = currentImageArea * maxArea_rel;
+            const selectionArea = Math.abs(width * height);
+        
+            // console.log('Touch Selection Debug:', {
+            //     scale,
+            //     width,
+            //     height,
+            //     currentSelectionArea: selectionArea,
+            //     imageSize: {
+            //         width: rect.width,
+            //         height: rect.height,
+            //         area: currentImageArea
+            //     },
+            //     maxArea,
+            //     percentage: (selectionArea / currentImageArea) * 100 + '%'
+            // });
+        
+            return {
+                isValid: selectionArea <= maxArea,
+                selectionArea,
+                maxArea
+            };
+        }
+    }
+
+    // Event-Handler für die Validierung
+    handleSelectionComplete() {
+        const selectionBox = document.getElementById('selectionBox');
+        
+        // Prüfe erst, ob die Box eine gültige Größe hat
+        if (selectionBox.classList.contains('invalid-size')) {
+            this.showSelectionFeedback(false, 'Na Du Fritte?\n Machst Du es Dir besonders einfach? 😏\n (Die Auswahl ist zu groß!)');
+            return;
+        }
+    
+        const result = this.validateSelection(selectionBox);
+        
+        if (result.valid) {
+            this.showSelectionFeedback(true, result.reason);
+            // Zeige das Sternbild an und gehe zu Level 3
+            this.setConstellationVisible(this.constellation.id);
+            setTimeout(() => {
+                this.currentLevel = 3;
+                this.showLevel();
+                this.saveGameState();
+
+                // Deaktiviere Selektionsmodus
+                const selectionOverlay = document.getElementById('selectionOverlay');
+                const selectionModeBtn = document.getElementById('selectionModeBtn');
+                const selectionFeedback = document.querySelector('.selection-feedback');
+                if (selectionOverlay) {
+                    selectionOverlay.style.display = 'none';
+                }
+                if (selectionModeBtn) {
+                    selectionModeBtn.classList.remove('active');
+                }
+                if (selectionFeedback) {
+                    selectionFeedback.style.display = 'none';
+                }
+            }, 2500);
+        } else {
+            this.showSelectionFeedback(false, result.reason);
+        }
+    }
+
+    validateSelection(selectionBox) {
+        // 1. Setup
+        const wrapper = document.getElementById('starmapWrapper');
+        const layers = document.getElementById('starmapLayers');
+        const transform = new DOMMatrix(window.getComputedStyle(layers).transform);
+        const scale = transform.a;
+        const image = document.getElementById('starmapImage');
+        const coords = this.constellation.coordinates;
+
+        const ORIGINAL_WIDTH = 1340.0;
+        const ORIGINAL_HEIGHT = 1369.0;
+        const imageWidth = parseFloat(image.width);
+        const imageHeight = parseFloat(image.height);
+
+        // Centroid skalieren
+        // Relative Position von centroid im Bild
+        let centroid_rel_x = parseFloat(coords.centroid.x) / parseFloat(ORIGINAL_WIDTH);
+        let centroid_rel_y = parseFloat(coords.centroid.y) / parseFloat(ORIGINAL_HEIGHT);
+        
+        // Wende relative Position auf das transformierte Bild an
+        centroid_rel_x = centroid_rel_x * parseFloat(image.width);
+        centroid_rel_y = centroid_rel_y * parseFloat(image.height);
+
+        // Boundaries skalieren
+        let bounds_minX_rel = (coords.bounds.minX / ORIGINAL_WIDTH) * imageWidth;
+        let bounds_maxX_rel = (coords.bounds.maxX / ORIGINAL_WIDTH) * imageWidth;
+        let bounds_minY_rel = (coords.bounds.minY / ORIGINAL_HEIGHT) * imageHeight;
+        let bounds_maxY_rel = (coords.bounds.maxY / ORIGINAL_HEIGHT) * imageHeight;
+        let bounds_width_rel = (coords.bounds.width / ORIGINAL_WIDTH) * imageWidth;
+        let bounds_height_rel = (coords.bounds.height / ORIGINAL_HEIGHT) * imageHeight;
+        
+        
+        // 2. Transformiere Selection Box in Image-Koordinaten zurück
+        // Get all relevant rectangles
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const layersRect = layers.getBoundingClientRect();
+        const boxRect = selectionBox.getBoundingClientRect();
+
+        const selectionInImage = {
+            left: ((boxRect.left - wrapperRect.left) - transform.e) / scale,
+            right: ((boxRect.right - wrapperRect.left) - transform.e) / scale,
+            top: ((boxRect.top - wrapperRect.top) - transform.f) / scale,
+            bottom: ((boxRect.bottom - wrapperRect.top) - transform.f) / scale
+        };
+    
+        // 3. Debug-Visualisierung
+        // Entferne altes Debug-Overlay falls vorhanden
+        // const oldDebug = layers.querySelector('.debug-overlay');
+        // if (oldDebug) oldDebug.remove();
+    
+        // const debugOverlay = document.createElement('div');
+        // //debugOverlay.className = 'constellation-overlays'; // Nutze dieselbe Klasse wie die SVGs
+        // debugOverlay.style.cssText = `
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     right: 0;
+        //     bottom: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     pointer-events: none;
+        //     z-index: 999;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        //     aspect-ratio: 1340 / 1369;
+        // `;
+
+        // // Centroid mit denselben Positionierungseigenschaften wie die SVGs
+        // const centroidPoint = document.createElement('div');
+        // centroidPoint.style.cssText = `
+        //     position: absolute;
+        //     left: ${centroid_rel_x}px;
+        //     top: ${centroid_rel_y}px;
+        //     right: 0;
+        //     bottom: 0;
+        //     width: 6px;
+        //     height: 6px;
+        //     background: yellow;
+        //     border-radius: 50%;
+        //     object-fit: contain;
+        //     transform-origin: 0 0;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        // `;
+
+        // // Bounds Box mit denselben Positionierungseigenschaften
+        // const boundsBox = document.createElement('div');
+        // boundsBox.style.cssText = `
+        //     position: absolute;
+        //     left: ${bounds_minX_rel}px;
+        //     top: ${bounds_minY_rel}px;
+        //     width: ${bounds_width_rel}px;
+        //     height: ${bounds_height_rel}px;
+        //     border: 2px dashed yellow;
+        //     background: rgba(255, 255, 0, 0.1);
+        //     transform-origin: 0 0;
+        // `;
+
+        // debugOverlay.appendChild(centroidPoint);
+        // debugOverlay.appendChild(boundsBox);
+        // layers.appendChild(debugOverlay);
+        // setTimeout(() => debugOverlay.remove(), 2000);
+    
+        // console.log('Debug Info:', {
+        //     scale,
+        //     transform: {
+        //         e: transform.e,
+        //         f: transform.f
+        //     },
+        //     wrapperRect,
+        //     layersRect,
+        //     boxRect,
+        //     selectionInImage,
+        //     centroid: {
+        //         x: centroid_rel_x,
+        //         y: centroid_rel_y
+        //     }
+        // });
+
+        // 4. Prüfe ob Centroid in der Auswahl liegt
+        const centroidInBox = 
+            centroid_rel_x >= selectionInImage.left &&
+            centroid_rel_x <= selectionInImage.right &&
+            centroid_rel_y >= selectionInImage.top &&
+            centroid_rel_y <= selectionInImage.bottom;
+    
+        if (!centroidInBox) {
+            return { valid: false, reason: 'Echt jetzt!? Versuchs nochmal! 🤡 (Zentrum des Sternbilds nicht getroffen)' };
+        }
+    
+        // 5. Berechne Überlappung
+        const overlapBounds = {
+            left: Math.max(selectionInImage.left, bounds_minX_rel),
+            right: Math.min(selectionInImage.right, bounds_maxX_rel),
+            top: Math.max(selectionInImage.top, bounds_minY_rel),
+            bottom: Math.min(selectionInImage.bottom, bounds_maxY_rel)
+        };
+    
+        const overlapWidth = Math.max(0, overlapBounds.right - overlapBounds.left);
+        const overlapHeight = Math.max(0, overlapBounds.bottom - overlapBounds.top);
+        const overlapArea = overlapWidth * overlapHeight;
+    
+        const constellationArea = bounds_width_rel * bounds_height_rel;
+        const coveragePercent = (overlapArea / constellationArea) * 100;
+    
+        return {
+            valid: coveragePercent >= 80,
+            coverage: coveragePercent,
+            reason: coveragePercent >= 80 
+                ? 'GROß\n(ungewohnt 😜)\nSternbild gefunden!' 
+                : `Wie viel Dioptrien sitzen vor dem Bildschirm? 💩 Nur ${Math.round(coveragePercent)}% des Sternbilds sind in der Auswahl.`
+        };
+    }
+
+
+    // Visuelles Feedback
+    showSelectionFeedback(isCorrect, message) {
+        const selectionBox = document.getElementById('selectionBox');
+        selectionBox.classList.add(isCorrect ? 'correct' : 'incorrect');
+        
+        // Feedback-Element erstellen
+        const feedback = document.createElement('div');
+        feedback.className = `selection-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+        feedback.textContent = message;
+        document.getElementById('starmapWrapper').appendChild(feedback);
+
+        // Nach kurzer Zeit wieder entfernen
+        setTimeout(() => {
+            selectionBox.classList.remove('correct', 'incorrect');
+            feedback.remove();
+        }, 2500);
+    }
+    
+    // Einzeichnen der Sternenbilder für abgeschlossene Challenges
+    createConstellationOverlays() {
+        // console.log('Erstelle Overlays für folgende Constellations:', 
+            // this.constellations
+                // .filter(constellation => this.isConstellationVisible(constellation.id))
+                // .map(c => c.id)
+        // );
+
+        // Preload-Funktion
+        const preloadSVG = (url) => {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    console.log(`SVG geladen: ${url}`);
+                    resolve(url);
+                };
+                img.onerror = () => {
+                    console.error(`Fehler beim Laden von SVG: ${url}`);
+                    reject(url);
+                };
+                img.src = url;
+            });
+        };
+
+        // Erst alle SVGs laden
+        const visibleConstellations = this.constellations
+        .filter(constellation => this.isConstellationVisible(constellation.id));
+
+        // const debugPoint = `
+        // <div class="debug-centroid" style="
+        //     position: absolute;
+        //     left: ${this.constellation.coordinates.centroid.x}px;
+        //     top: ${this.constellation.coordinates.centroid.y}px;
+        //     width: 6px;
+        //     height: 6px;
+        //     background: red;
+        //     border-radius: 50%;
+        //     z-index: 999;
+        //     pointer-events: none;
+        // "></div>
+        // `;
+        //console.log(debugPoint)
+
+        //console.log(this.constellation.id)
+        Promise.all(visibleConstellations.map(constellation => 
+            preloadSVG(`./assets/constellations/${constellation.id}.svg`)
+        ))
+        .then(() => {
+            // Wenn alle SVGs geladen sind, HTML generieren
+            const overlaysHTML = visibleConstellations
+                .map(constellation => {
+                    const svgUrl = `./assets/constellations/${constellation.id}.svg`;
+                    const isCompleted = this.isConstellationCompleted(constellation.id);
+    
+					if (constellation.id == "leonidas_magnus"){
+					return `
+                        <img 
+                            src="./assets/constellations/${constellation.id}.png"
+                            class="constellation-overlay ${isCompleted ? 'visible' : ''}"
+                            data-constellation-id="${constellation.id}"
+                            alt="Overlay für ${constellation.name}"
+                        >
+                    `;
+					}
+	
+                    return `
+                        <img 
+                            src="${svgUrl}"
+                            class="constellation-overlay ${isCompleted ? 'visible' : ''}"
+                            data-constellation-id="${constellation.id}"
+                            alt="Overlay für ${constellation.name}"
+                            loading="eager" 
+                            decoding="sync"
+                            vector-effect="non-scaling-stroke"
+                        >
+                    `;
+                })
+                .join('');
+    
+            // Overlay Container suchen/erstellen und HTML einfügen
+            const overlaysContainer = document.getElementById('constellationOverlays');
+            if (overlaysContainer) {
+                //console.log('Füge Overlays ein:', overlaysHTML);
+                overlaysContainer.innerHTML = overlaysHTML;
+            } else {
+                console.error('Overlay container nicht gefunden!');
+            }
+        })
+        .catch(errors => {
+            console.error('Fehler beim Laden der SVGs:', errors);
+        });
+    
+        // Leeren String zurückgeben während des Ladens
+        return '';
+    }
+
+    // Hilfsmethoden für den Zustand
+    isConstellationVisible(constellationId) {
+        return this.constellationStates[constellationId]?.visible || false;
+    }
+
+    setConstellationVisible(constellationId, visible = true) {
+        if (this.constellationStates[constellationId]) {
+            this.constellationStates[constellationId].visible = visible;
+        }
+    }
+
+    // Prüfen, ob ein Sternbild "completed" ist
+    isConstellationCompleted(constellationId) {
+        // Ein Sternbild ist completed wenn:
+        // 1. Es ein früheres Sternbild ist (Index kleiner als aktueller Index)
+        // ODER
+        // 2. Es das aktuelle Sternbild ist UND mindestens Level 3 erreicht wurde
+        const isCompletedByIndex = this.currentConstellationIndex > this.constellations.findIndex(c => c.id === constellationId);
+        const isCurrentConstellation = this.constellation.id === constellationId && this.currentLevel >= 3;
+        
+        // Gebe true zurück, wenn eine der Bedingungen erfüllt ist
+        return isCompletedByIndex || isCurrentConstellation;
+    }
+
+    updateConstellationOverlays() {
+        // Finde den Container für die Overlays
+        const overlaysContainer = document.getElementById('constellationOverlays');
+        if (!overlaysContainer) {
+            console.error('Overlay container not found');
+            return;
+        }
+    
+        overlaysContainer.innerHTML = this.createConstellationOverlays();
+    }
+
+    logConstellationStates() {
+        console.log('Current States:', {
+            currentIndex: this.currentConstellationIndex,
+            currentLevel: this.currentLevel,
+            states: this.constellationStates
+        });
+    }
+
+//--- ENDE Challenge 
+
+    //Hinweise
+    createLevel2() {
+        this.nextButton.style.display = 'none';
+        return `
+            <div class="card">
+                <div class="constellation-title-wrapper">
+                    <div class="constellation-subtitle">Hilfreiche Hinweise</div>
+                </div>
+            ${this.createHints()}
+            </div>
+        `;
+    }
+
+    createHints() {
+        //1. Iteriere durch alle Hinweise per map (lambda(?) function) und index
+        //2. Erstelle je Hint ein Div Container, der entweder offen oder (teil) geschlossen ist
+        //   Return entweder offenen Hinweis ODER geschlossen und dann entweder teil oder ganz geschlossen
+        //3. Verknüpfung per .join
+        return `
+            <div class="hints-container">
+                ${this.constellation.puzzle.hints.map((hint, index) => {
+                    const state = this.hintStates[index];
+                    
+                    if (state === 'revealed') {
+                        return `
+                            <div class="hint hint-revealed">
+                                <div class="hint-text">${hint}</div>
+                            </div>`;
+                    }
+                    
+                    const icon = state === 'locked' ? '💡' : '🔓';
+                    const stateClass = `hint-${state}`;
+                    
+                    return `
+                        <div class="hint ${stateClass}" data-hint-index="${index}">
+                            <span class="hint-icon">${icon}</span>
+                            <span class="hint-status">Hinweis ${index + 1}</span>
+                        </div>`;
+                }).join('')}
+            </div>
+        `;
+    }
+
+    cycleHintState(hintIndex) {
+        const currentState = this.hintStates[hintIndex];
+        
+        switch (currentState) {
+            case 'locked':
+                this.hintStates[hintIndex] = 'revealed';
+                break;
+        }
+        
+        this.updateHints();
+    }
+
+    updateHints() {
+        const hintsContainer = this.contentDiv.querySelector('.hints-container');
+        if (hintsContainer) {
+            hintsContainer.innerHTML = this.createHints();
+            this.attachHintListeners();
+        }
+    }
+
+    attachHintListeners() {
+        const hints = this.contentDiv.querySelectorAll('.hint[data-hint-index]');
+        hints.forEach(hint => {
+            hint.addEventListener('click', (e) => {
+                const index = parseInt(hint.dataset.hintIndex);
+                this.cycleHintState(index);
+            });
+        });
+    }
+
+    //WENN Gelöst:
+    //Informationen zu Mythologie und Astronomie
+    createLevel3() {
+        // Aktuelles Sternenbild wird sichtbar
+        this.setConstellationVisible(this.constellation.id);
+        
+        // Auch alle vorherigen Sternenbilder werden sichtbar
+        this.constellations.forEach((constellation, index) => {
+            if (index < this.currentConstellationIndex) {
+                this.setConstellationVisible(constellation.id);
+            }
+        });
+
+        this.nextButton.style.display = 'block';
+        this.nextButton.innerHTML = "Du willst mehr wissen? 📖"
+        const { mythology, astronomy } = this.constellation.basics;
+
+        // Aktualisiere nach einer kurzen Verzögerung die Overlays
+        // setTimeout(() => {
+        //     this.updateConstellationOverlays();
+        // }, 100);
+
+        return `
+            <div class="card l3">
+                <h2 class="subtitle">${mythology.icon} ${mythology.title}</h2>
+                <p>${mythology.text}</p>
+                <h2 class="subtitle">${astronomy.icon} ${astronomy.title}</h2>
+                <ul class="facts-list">
+                    ${astronomy.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    //Spannende Details und Sidefacts
+    createLevel4() {
+        this.nextButton.innerHTML = "Nächstes LEVEL"
+        const { details1, details2 } = this.constellation.details;
+        return `
+            <div class="card">
+                <h2 class="subtitle">${details1.icon} ${details1.title}</h2>
+                <ul class="facts-list">
+                    ${details1.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+                <h2 class="subtitle">${details2.icon} ${details2.title}</h2>
+                <h3>${details2.subtitle}</h3>
+                <ul class="facts-list">
+                    ${details2.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    // Nächstes Sternbild
+    moveToNextConstellation() {
+        this.currentConstellationIndex++;
+
+        // Scrolle sanft nach oben bevor der neue Content geladen wird
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        if (this.currentConstellationIndex < this.constellations.length) {
+
+            if(this.constellations[this.currentConstellationIndex].id === "leonidas_magnus"){
+                this.constellation = this.constellations[this.currentConstellationIndex]; // Wichtig: Setze aktuelle Konstellation
+                this.currentLevel = 98; // Spezial-Level für Bonus
+                this.contentDiv.innerHTML = ''; 
+                this.showBonusScreen();
+                this.saveGameState(); // Wichtig: Speichere den Status
+                return;
+            }
+
+            // Setze alle bisherigen Konstellationen auf sichtbar
+            this.constellations.forEach((constellation, index) => {
+                if (index < this.currentConstellationIndex) {
+                    this.setConstellationVisible(constellation.id);
+                }
+            });
+    
+            this.constellation = this.constellations[this.currentConstellationIndex];
+            this.currentLevel = 1;
+            this.initializeHintStates();
+            this.nextButton.style.display = 'block'; 
+            this.contentDiv.innerHTML = '';             
+
+            this.showLevel();
+            
+        } else {
+            this.showCompletionScreen();
+        }
+    }
+
+    // BONUS vor ENDE
+    showBonusScreen() {
+        const aliasName = this.constellation.alias 
+            ? `<div class="constellation-alias">Alias<br>${this.constellation.alias}</div>`
+            : '';
+
+        const { mythology, astronomy } = this.constellation.basics;
+        const { details1, details2 } = this.constellation.details;
+        
+        // Button-Handler für Bonus-Level
+        this.nextButton.innerHTML = "Nächstes LEVEL";
+        this.nextButton.style.display = 'block';
+        
+        // Entferne alte Event-Listener
+        // const newButton = this.nextButton.cloneNode(true);
+        // this.nextButton.parentNode.replaceChild(newButton, this.nextButton);
+        // this.nextButton = newButton;
+        
+        // Füge neuen Event-Listener hinzu
+        this.currentLevel = 4;
+        this.nextButton.addEventListener('click', () => this.handleNextLevel());
+
+        // Setze Content
+        this.contentDiv.innerHTML = `
+            <div class="card">
+                ${this.showProgress()}
+                <div class="constellation-title-wrapper">
+                    <div class="constellation-subtitle">Bonus Sternbild</div>
+                    <h2 class="constellation-title">${this.constellation.name}</h2>
+                    ${aliasName}
+                    <div class="constellation-subtitle">Schwierigkeitsgrad: ${this.constellation.difficulty}</div>
+                </div>
+                <div class="puzzle-text">${this.constellation.puzzle.text}</div>
+            </div>
+
+            <div class="card starmap-card">
+                <div class="starmap-container">
+                    <div class="starmap-wrapper" id="starmapWrapper">
+                        <div class="starmap-layers" id="starmapLayers">
+                            <img 
+                                src="./assets/starmap_leonidas.png" 
+                                alt="Sternenkarte"
+                                class="starmap-image"
+                                id="starmapImage"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="subtitle">${mythology.icon} ${mythology.title}</h2>
+                <p>${mythology.text}</p>
+                <h2 class="subtitle">${astronomy.icon} ${astronomy.title}</h2>
+                <ul class="facts-list">
+                    ${astronomy.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2 class="subtitle">${details1.icon} ${details1.title}</h2>
+                <ul class="facts-list">
+                    ${details1.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+                <h2 class="subtitle">${details2.icon} ${details2.title}</h2>
+                <h3>${details2.subtitle}</h3>
+                <ul class="facts-list">
+                    ${details2.facts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+
+        // Mache Cards sichtbar
+        setTimeout(() => {
+            const cards = document.querySelectorAll('.card:not(.visible)');
+            cards.forEach(card => card.classList.add('visible'));
+        }, 50);
+    }  
+
+    // ENDE → Abschluss-Screen
+    showCompletionScreen() {
+        // Content erstellen
+        const completionContent = `
+            <div class="card completion-screen">
+                <div class="constellation-title-wrapper">
+                    <h2 class="constellation-title">Gratulation!</h2>
+                    <div class="constellation-subtitle">Alle Sternbilder entdeckt</div>
+                </div>
+                <div class="puzzle-text">
+                    Du hast alle Sternbilder erfolgreich erkundet! Jetzt wird eine ausgiebige Kuschelsession fällig! SOFORT! 😁
+                </div>
+            </div>
+			<div class="card starmap-card">
+                <div class="starmap-container">
+                    <div class="starmap-wrapper" id="starmapWrapper">
+                        <div class="starmap-layers" id="starmapLayers">
+                            <!-- Basis-Sternenkarte -->
+                            <img 
+                                src="./assets/starmap.png" 
+                                alt="Sternenkarte"
+                                class="starmap-image"
+                                id="starmapImage"
+                            >
+                            <!-- Container für SVG Overlays -->
+                            <div class="constellation-overlays" id="constellationOverlays">
+                                ${this.createConstellationOverlays()}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Content einfügen
+        this.contentDiv.innerHTML = completionContent;
+        this.nextButton.style.display = 'none';
+    
+        // Kurz warten bis DOM aktualisiert ist
+        requestAnimationFrame(() => {
+            // Dann erst die visible-Klasse hinzufügen
+            const completionCard = this.contentDiv.querySelector('.completion-screen');
+            if (completionCard) {
+                completionCard.classList.add('visible');
+				const newCards = document.querySelectorAll('.card:not(.visible)');
+				newCards.forEach(card => card.classList.add('visible'));
+            }
+        });
+    }
+
+    // Methode um den Fortschritt anzuzeigen
+    showProgress() {
+        return `
+            <div class="progress-indicator">
+                Sternbild ${this.currentConstellationIndex + 1} von ${this.constellations.length}
+            </div>
+        `;
+    }
+}
