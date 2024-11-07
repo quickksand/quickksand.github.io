@@ -212,7 +212,7 @@ const constellationData = {
 		{
             "id": "bigdipper",
             "name": "Großer Wagen",
-            "alias": "Der Große Suppenlöffel (eng. Big Dipper)",
+            "alias": "Big Dipper",
             "difficulty": "sehr leicht",
             "coordinates": {
                 "centroid": {
@@ -249,8 +249,8 @@ const constellationData = {
                 "astronomy": {
                     "title": "Wichtigste astronomische Fakten",
                     "facts": [
-                        "Der Große Wagen ist kein eigenes Sternbild, sondern der auffälligste Teil des Großen Bären (Ursa Major). Als zirkumpolares Asterismus ist er das ganze Jahr über sichtbar.",
-                        "Fünf der sieben Hauptsterne bewegen sich gemeinsam durchs All - die 'Große-Wagen-Gruppe'. Nur Dubhe und Alkaid tanzen aus der Reihe, wodurch sich die Form in etwa 50.000 Jahren auflösen wird.",
+                        "Der Große Wagen ist eigentlich kein eigenes Sternbild - aber dazu später mehr 😉. Als 'zirkumpolares Asterismus' (🎓 flex) ist er das ganze Jahr über sichtbar.",
+                        "Fünf der sieben Sterne bewegen sich als Strom gemeinsam durchs All. Nur Dubhe und Alkaid tanzen aus der Reihe, wodurch sich die Form in etwa 50.000 Jahren auflösen wird. (oh nein 🆘)",
                     ],
                     "icon": "🌟"
                 }
@@ -259,20 +259,20 @@ const constellationData = {
                 "details1": {
                     "title": "Spannende Details",
                     "facts": [
-                        "Mizar & Alkor (der mittlere Deichselstern) sind der erste Doppelstern, der fotografiert wurde (1857). Noch spannender: Mizar & Alkar sind selbst auch doppelt, und jeder dieser Sterne ist nochmal doppelt - ein Sechs-Sterne-System!",
+                        "Mizar & Alkor (der mittlere Deichselstern) sind der erste Doppelstern, der fotografiert wurde (1857).",
+						"Noch spannender: Mizar & Alkar sind selbst auch doppelt, und jeder dieser Sterne ist nochmal doppelt - ein Sechs-Sterne-System!",
                         "Die Indianer prüften mit Mizar/Alcor das Sehvermögen ihrer Späher, die Römer testeten damit ihre Legionäre. Wer beide Sterne trennen kann, hat sehr gute Augen."
                     ],
                     "icon": "🧠"
                 },
 				"details2": {
-					"title": "Kulturelle & Historische Bedeutung",
-					"subtitle": "Navigation und Zeitbestimmung",
+					"title": "Achtung: Unfug 😋",
+					"subtitle": "Stars behind the stars",
 					"facts": [
-						"Bei den alten Ägyptern markierte die Position des Großen Wagens die Nachtstunden - eine Art himmlische Uhr.",
-						"Die gemeinsame Bewegung von fünf der sieben Hauptsterne wurde erst 1869 entdeckt - sie gehören zu den ältesten bekannten Sternströmen.",
-						"Der Große Wagen war für die Seefahrt von enormer Bedeutung: Die 'Pointer Stars' (die beiden vorderen Kastensterne) zeigen zuverlässig zum Polarstern.",
+						"Taylor Swift Reference: Der 'Shake it off'-Moment? Die beiden Sterne Dubhe und Merak tanzen literally aus der Reihe und machen ihr eigenes Ding!",
+						"Die alten Griechen nannten den Großen Wagen auch 'Helikes' (die sich Drehende) - quasi der erste astronomische Dance Move! (Puh, ich hoffe, das wird nie unsere Tanzgeschwindigkeit 🧓)"
 					],
-					"icon": "🧭"
+					"icon": "🌟"
 				}
             }
         },
@@ -388,8 +388,7 @@ const constellationData = {
 			   "astronomy": {
 				   "title": "Wichtigste astronomische Fakten",
 				   "facts": [
-					   "Der Große Bär ist mit 1280 Quadratgrad das drittgrößte Sternbild des Himmels. Er enthält neben dem Großen Wagen noch viele weitere interessante Objekte.",
-					   "Die meisten seiner helleren Sterne gehören zur 'Ursa-Major-Bewegungsgruppe', einem der ersten entdeckten Sternströme. Sie sind etwa gleich alt und bewegen sich in die gleiche Richtung.",
+					   "Der Große Bär ist mit 1280 Quadratgrad das drittgrößte Sternbild des Himmels.",
 					   "Im Sternbild befinden sich die berühmten Galaxien M81 und M82, die schon im Fernglas als nebelhafte Flecken zu sehen sind. Sie wechselwirken gravitativ miteinander."
 				   ],
 				   "icon": "🌟"
@@ -409,9 +408,8 @@ const constellationData = {
 				   "title": "Kulturelle & Historische Bedeutung",
 				   "subtitle": "Ein Sternbild, viele Deutungen",
 				   "facts": [
+					   "In China war der Bereich des 'Bärenkopfes' als 'Himmlischer Jade-Palast' bekannt.",
 					   "Die Form eines Bären findet sich überraschenderweise sowohl bei nordamerikanischen Ureinwohnern als auch bei den alten Griechen - eine der wenigen identischen Deutungen über Kontinente hinweg.",
-					   "In China war der Bereich des 'Bärenkopfes' als 'Himmlischer Jade-Palast' bekannt - ein Bereich von besonderer astronomischer Bedeutung für die kaiserlichen Astronomen.",
-					   "Die Inuit sahen in diesem Bereich einen 'Karibu' (Rentier) - die Sterne der 'Tatzen' markierten dabei wichtige Zeitpunkte der Karibu-Wanderung."
 				   ],
 				   "icon": "🌏"
 			   }
@@ -420,7 +418,7 @@ const constellationData = {
 		{
 			"id": "ursa-minor",
 			"name": "Kleiner Bär",
-			"alias": "Ursa Minor / Kleine Bärin / Kleiner Wagen",
+			"alias": "Ursa Minor",
 			"difficulty": "mittel-leicht",
 			"coordinates": {
 				"centroid": {
@@ -457,7 +455,7 @@ const constellationData = {
 				"astronomy": {
 					"title": "Wichtigste astronomische Fakten",
 					"facts": [
-						"Der Polarstern (Polaris) ist nur zufällig nah am Himmelsnordpol. Aufgrund der Präzession der Erdachse wird in etwa 13.000 Jahren Wega der neue Polarstern sein.",
+						"Der Polarstern (Polaris) ist nur zufällig nah am Himmelsnordpol. Aufgrund der Veränderung der Erdachse (Präzession) wird in schon 13.000 Jahren Wega der neue Polarstern sein. (Also wirds Zeit Wega zu lernen!)",
 						"Polaris ist ein dreifaches Sternsystem: Ein heller Hauptstern mit zwei kleineren Begleitern. Er ist auch ein veränderlicher Stern, dessen Helligkeit leicht schwankt.",
 						"Der Kleine Bär steht 'kopfüber' im Vergleich zum Großen Bären - ihre Schwänze zeigen in entgegengesetzte Richtungen."
 					],
@@ -468,9 +466,7 @@ const constellationData = {
 				"details1": {
 					"title": "Spannende Details",
 					"facts": [
-						"Die Phönizier waren die ersten Seefahrer, die sich am Polarstern statt am Großen Bären orientierten - eine Innovation, die die Seefahrt revolutionierte.",
-						"Der Polarstern ist nicht der hellste Stern am Nordhimmel (das ist Capella), aber der wichtigste für die Navigation - ein kosmischer Fixpunkt in einer sich drehenden Welt.",
-						"Interessanterweise war der Kleine Bär für die alten Griechen die 'Phönizische Konstellation' - eine seltene Anerkennung der nautischen Leistungen ihrer Handelsrivalen."
+						"Der Polarstern ist nicht der hellste Stern am Nordhimmel (das ist Capella), aber der allerwichtigste für die Navigation - ein kosmischer Fixpunkt in einer sich drehenden Welt.",
 					],
 					"icon": "🧠"
 				},
@@ -480,8 +476,7 @@ const constellationData = {
 					"facts": [
 						"Es ist ein kosmischer Zufall (mögen wir Zufälle? 🤔), dass wir gerade jetzt einen so guten Polarstern haben - in der Geschichte der Menschheit ist das eher die Ausnahme als die Regel.",
 						"In den Zeiten der 'Underground Railroad' in Amerika wurde der Polarstern zum Symbol der Freiheit - er zeigte entflohenen Sklaven den Weg nach Norden.",
-						"Die Römer nannten den Polarstern 'Stella Maris' (Meerstern) - heute noch der traditionelle Titel der Schutzheiligen der Seefahrer.",
-						"Die einzigen Menschen, für die der Polarstern direkt über ihren Köpfen steht, sind die Bewohner der kleinen norwegischen Insel Vikingen auf 66,5° nördlicher Breite - ein beliebtes Ziel für Astronomie-Touristen."
+						"Es gibt einen Ort an Land, an dem der Polarstern direkt über Dir steht: die kleine norwegische Insel Vikingen auf 66,5° nördlicher Breite - ein beliebtes Ziel für Astronomie-Touris."
 					],
 					"icon": "🧭"
 				}
@@ -528,8 +523,7 @@ const constellationData = {
 				   "title": "Wichtigste astronomische Fakten",
 				   "facts": [
 					   "Das Große Herbstviereck ist eines der auffälligsten geometrischen Muster am Himmel. Seine Sterne liegen zwischen 100 und 1000 Lichtjahren entfernt.",
-					   "Der hellste Stern Enif (arabisch für 'Nase') ist ein orangefarbener Überriese, der 12.000-mal heller leuchtet als unsere Sonne.",
-					   "Im Pegasus-Quadrat wurde 1995 der erste Planet um einen sonnenähnlichen Stern außerhalb unseres Sonnensystems entdeckt - bei 51 Pegasi."
+					   "Der hellste Stern Enif (arabisch für 'Nase') ist ein orangefarbener Überriese, der 12.000-mal heller leuchtet als unsere Sonne."
 				   ],
 				   "icon": "🌟"
 			   }
@@ -538,7 +532,6 @@ const constellationData = {
 			   "details1": {
 				   "title": "Spannende Details",
 				   "facts": [
-					   "51 Pegasi b, der erste entdeckte Exoplanet, ist ein 'Heißer Jupiter' - ein Gasriese, der seinen Stern in nur 4,2 Tagen umkreist. Seine Entdeckung revolutionierte unser Verständnis von Planetensystemen.",
 					   "Das Pegasus-Quadrat ist so groß, dass 15 Vollmonde nebeneinander hineinpassen würden - ein beliebter Vergleich, um Himmelsgrößen zu veranschaulichen.",
 					   "Der Stern IK Pegasi ist mit 150 Lichtjahren das uns nächstgelegene potentielle Supernova-System - aber keine Sorge, die Entfernung ist sicher genug!"
 				   ],
@@ -549,8 +542,8 @@ const constellationData = {
 				   "subtitle": "Herbstlicher Wegweiser",
 				   "facts": [
 					   "Das Pegasus-Quadrat ist ein wichtiger 'Wegweiser' zu Andromeda: Von der nordöstlichen Ecke des Quadrats führt eine Sternenkette zur berühmten Andromedagalaxie.",
-					   "Die Araber sahen in diesem Sternbild kein Pferd, sondern ein großes Zelt - die vier hellen Sterne als Zeltpfosten. Die 'Zelt'-Interpretation passt eigentlich besser zur rechteckigen Form.",
-					   "In der antiken Seefahrt markierte der Aufgang des Pegasus die letzte Phase der sicheren Schifffahrtssaison im Mittelmeer."
+					   "Die Araber sahen kein Pferd, sondern ein großes Zelt - die vier hellen Sterne als Zeltpfosten. (Also ich sehe da eine Ritter Sport 🍫😋)",
+					   "In der antiken Seefahrt markierte der Aufgang des Pegasus die letzte Phase der sicheren Schifffahrtssaison im Mittelmeer. (nicht, dass man dann noch über den Rand der Welt fällt 🆘)"
 				   ],
 				   "icon": "🔭"
 			   }
@@ -596,7 +589,7 @@ const constellationData = {
                 "astronomy": {
                     "title": "Wichtigste astronomische Fakten",
                     "facts": [
-                        "Die Andromedagalaxie (M31) ist mit 2,5 Millionen Lichtjahren Entfernung das fernste Objekt, das man mit bloßem Auge sehen kann. Sie enthält etwa eine Billion Sterne!",
+                        "Die Andromedagalaxie (M31) ist mit 2,5 Millionen Lichtjahren Entfernung das fernste Objekt, das man mit bloßem Auge sehen kann (wenn man kann 👓). Sie enthält etwa eine Billion Sterne!",
                         "Unsere Milchstraße und die Andromedagalaxie bewegen sich aufeinander zu und werden in etwa 4,5 Milliarden Jahren verschmelzen.",
                         "Die Hauptsterne von Andromeda bilden eine charakteristische Kette, die die 'Ketten' der gefesselten Prinzessin darstellt."
                     ],
@@ -607,7 +600,7 @@ const constellationData = {
                 "details1": {
                     "title": "Spannende Details",
                     "facts": [
-                        "Andromeda war die erste Galaxie, bei der man erkannte, dass es sich um eine eigenständige 'Sterneninsel' außerhalb unserer Milchstraße handelt - eine revolutionäre Entdeckung von Edwin Hubble 1923.",
+                        "Andromeda ist die erste erkannte 'Sterneninsel' außerhalb unserer Milchstraße (Edwin Hubble 1923).",
                         "Die Galaxie ist bereits 6-mal so groß am Himmel wie der Vollmond, erscheint uns aber viel kleiner, weil sie so lichtschwach ist.",
                     ],
                     "icon": "🧠"
@@ -616,9 +609,9 @@ const constellationData = {
                     "title": "Psychologie & Symbolik",
                     "subtitle": "Familie, Bindung und Entwicklung",
                     "facts": [
-                        "Die Geschichte thematisiert den entwicklungspsychologisch wichtigen Prozess der Ablösung von den Eltern - wenn auch in dramatischer, mythologischer Form.",
+                        "Die Geschichte thematisiert den entwicklungs-psychologisch wichtigen Prozess der Ablösung von den Eltern - wenn auch in (minimal) dramatischer Form.",
                         "Der Name 'Andromeda' bedeutet 'die über Männer Herrschende' - ein interessanter Kontrast zu ihrer scheinbar passiven Rolle.",
-                        "Die Rettung durch Perseus kann die Bedeutung sozialer Unterstützung bei der Überwindung von Krisen symbolisieren.",
+                        "Die Rettung durch Perseus kann die Bedeutung sozialer Unterstützung bei der Überwindung von Krisen symbolisieren. (Man kann nicht immer alles alleine schaffen würden ältere Menschen jetzt sagen 🧓)",
                     ],
                     "icon": "🧠"
                 }
@@ -658,15 +651,15 @@ const constellationData = {
 			"basics": {
 				"mythology": {
 					"title": "Mythologie",
-					"text": "Perseus ist der Held, der Andromeda (Tochter der Cassiopeia) rettete. Mit dem abgeschlagenen Haupt der Medusa versteinerte er das Seeungeheuer Cetus, das Andromeda bedrohte. Seine Geschichte ist ein Beispiel dafür, wie Klugheit und Mut gemeinsam zum Sieg führen.",
+					"text": "Perseus ist der Held, der Andromeda (Tochter der Cassiopeia) rettete. Mit dem abgeschlagenen Haupt der Medusa versteinerte er das Seeungeheuer Cetus, das Andromeda bedrohte.",
 					"icon": "🖼️"
 				},
 				"astronomy": {
 					"title": "Wichtigste astronomische Fakten",
 					"facts": [
-						"Der Stern Algol ('Dämonenstern') ist ein bedeckungsveränderlicher Doppelstern. Alle 2,87 Tage wird der hellere Stern vom dunkleren teilweise verdeckt, wodurch seine Helligkeit deutlich abnimmt.",
-						"Der Perseus-Doppelsternhaufen (h und χ Persei) ist mit bloßem Auge als verwaschener Doppelfleck zu sehen. Im Fernglas löst er sich in zwei prachtvolle Sternhaufen auf.",
-						"Im August jeden Jahres scheinen aus Perseus die Perseiden zu regnen - einer der aktivsten und bekanntesten Meteorströme des Jahres."
+						"Der Stern Algol ('Dämonenstern') blinzelt! Alle 2,87 Tage wird der hellere Stern vom dunkleren teilweise verdeckt, wodurch seine Helligkeit deutlich abnimmt.",
+						"Der Perseus-Doppelsternhaufen (h und χ Persei) ist mit bloßem Auge nur als verwaschener Fleck zu sehen. Im Fernglas löst er sich in zwei prachtvolle Sternhaufen auf! (#GLOW-UP ✨) 🔭",
+						"Immer im August scheinen aus Perseus die Perseiden zu regnen - einer toller Meteorstrom für laue Nächte."
 					],
 					"icon": "🌟"
 				}
@@ -677,7 +670,6 @@ const constellationData = {
 					"facts": [
 						"Der Name Algol kommt aus dem Arabischen und bedeutet 'Ghul' oder 'Dämon'. Die alten Astronomen bemerkten sein regelmäßiges 'Blinzeln' und hielten es für unheimlich.",
 						"Die Perseiden entstehen, wenn die Erde die Staubspur des Kometen Swift-Tuttle kreuzt (für mich gibts nur ein SWIFT!!! 🙄). Mit bis zu 100 Sternschnuppen pro Stunde sind sie das populärste astronomische Sommerereignis.",
-						"Die beiden Sternhaufen des Doppelsternhaufens sind etwa 7.000 Lichtjahre entfernt und enthalten jeweils über 300 helle, bläulich-weiße Sterne - ein prächtiger Anblick im Fernglas!"
 					],
 					"icon": "🧠"
 				},
@@ -686,7 +678,6 @@ const constellationData = {
 					"subtitle": "Von Antike bis Alohomora",
 					"facts": [
 						"Das 'Blinken' von Algol wurde in alten arabischen Texten mit dem unheimlichen Blinzeln des Medusenhauptes verglichen - eine erstaunlich präzise Beschreibung des astronomischen Phänomens.",
-						"Der Perseus-Doppelsternhaufen wird oft 'Schwert und Schildknauf' genannt, weil die beiden Sternhaufen wie das Funkeln einer antiken Waffe erscheinen.",
 						"Die Geschichte von Perseus inspirierte das Konzept des 'Monomythos' (Heldenreise) - ein Grundmuster, das sich in Geschichten von Star Wars bis Harry Potter wiederfindet."
 					],
 					"icon": "🎬"
@@ -733,9 +724,8 @@ const constellationData = {
 				"astronomy": {
 					"title": "Wichtigste astronomische Fakten",
 					"facts": [
-						"Castor ist als Doppelstern bekannt geworden, aber tatsächlich ein System aus sechs Sternen. Es lässt sich schon im kleinen Fernrohr in zwei bzw. drei Sterne trennen.",
-						"Um Pollux wurde 2006 ein Planet entdeckt - ein sogenannter Exoplanet, also ein Planet außerhalb unseres Sonnensystems. ('Pollux b')",
-						"Im Dezember jeden Jahres scheinen aus diesem Sternbild die Geminiden zu regnen - ein Meteorstrom, bei dem bis zu 120 Sternschnuppen pro Stunde zu sehen sind. Der 'Radiant', also der scheinbare Ausgangspunkt dieser Meteore, liegt nahe beim Stern Castor."
+						"Um Pollux wurde ein Planet entdeckt 🌏 - ein sogenannter Exoplanet, also ein Planet außerhalb unseres Sonnensystems. (ALIENS?? 👽)",
+						"Im Dezember jeden Jahres scheinen aus diesem Sternbild die Geminiden zu regnen (vormerken! 📅) - ein Meteorstrom, bei dem bis zu 120 Sternschnuppen pro Stunde zu sehen sind. Tipp: Suche bei Castor!"
 					],
 					"icon": "🌟"
 				}
@@ -745,8 +735,8 @@ const constellationData = {
 					"title": "Spannende Details",
 					"facts": [
 						"Pollux ist der nächstgelegene Riesenstern zur Erde (unsere Sonne ist ein gelber Zwerg). Seine orange Farbe zeigt, dass er sich im Herbst seines Sternenlebens befindet.",
-						"Die Geminiden sind anders als die meisten Meteorströme: Sie stammen nicht von einem Kometen, sondern von einem mysteriösen Asteroiden namens Phaethon.",
-						"Die Geminiden werden jedes Jahr stärker - vor 150 Jahren waren sie noch kaum zu sehen, heute sind sie der verlässlichste und reichste Meteorstrom des Jahres."
+						"Die Geminiden sind anders als die meisten Meteorströme: Sie stammen nicht von einem Kometen, sondern von einem mysteriösen (😱) Asteroiden namens Phaethon.",
+						"Die Geminiden werden jedes Jahr stärker - vor 150 Jahren waren sie noch kaum zu sehen, heute sind sie der verlässlichste und reichste Meteorstrom des Jahres!"
 					],
 					"icon": "🧠"
 				},
@@ -754,9 +744,8 @@ const constellationData = {
 					"title": "Zwillinge in Wissenschaft & Kultur",
 					"subtitle": "Faszination Doppelt",
 					"facts": [
-						"Die NASA nutzte eineiige Zwillinge für Studien zur Weltraumforschung: Ein Zwilling blieb auf der Erde, während der andere zur ISS flog. Nach einem Jahr zeigten sich erstaunliche Unterschiede in ihren Körpern! (zum nachlesen 😉)",
-						"Das Sternbild inspirierte die Raumfahrt: Das sog. Gemini-Programm der NASA bereitete die Mondlandungen vor.",
-						"Zwillinge entwickeln oft eigene Sprachen - diese 'Kryptophasie' fasziniert Linguisten seit Jahrzehnten!",
+						"Die NASA nutzte eineiige Zwillinge für Studien zur Weltraumforschung: Ein Zwilling blieb auf der Erde, während der andere zur ISS flog. Die Ergebnisse überschlagen sich! (zum nachlesen 😉)",
+						"Zwillinge entwickeln oft eigene Sprachen - diese 'Kryptophasie' fasziniert Linguisten seit Jahrzehnten! 🦹‍♂️🦹‍♂️",
 					],
 					"icon": "🔬"
 				}
@@ -769,16 +758,16 @@ const constellationData = {
 			"difficulty": "EASYPEASY",
 			"coordinates": {
 				"centroid": {
-					"x": 500,
-					"y": 500
+					"x": 908.82,
+					"y": 275.6
 				},
 				"bounds": {
-					"minX": 450,
-					"minY": 450,
-					"maxX": 550,
-					"maxY": 550,
-					"width": 100,
-					"height": 100
+					"minX": 760.66,
+					"minY": 114.61,
+					"maxX": 1053.99,
+					"maxY": 438.6,
+					"width": 293.33,
+					"height": 324
 				}
 			},
 			"puzzle": {
@@ -796,15 +785,15 @@ const constellationData = {
 			"basics": {
 				"mythology": {
 					"title": "Mythologie",
-					"text": "Der Legende nach erschuf Zeus dieses Sternbild, als er sah, wie ein junger Held nicht nur körperliche Stärke zeigte (wie die typischen Helden), sondern auch emotionale Intelligenz und Empathie. Besonders beeindruckt war Zeus davon, wie der Held seine Geliebte in ihren Träumen unterstützte und ihr ...",
+					"text": "Der Legende nach erschuf Zeus dieses Sternbild, als er sah, wie ein junger Held nicht nur körperliche Stärke zeigte (wie die typischen Helden), sondern auch emotionale Intelligenz und Empathie. Besonders beeindruckt war Zeus davon, wie der Held seine Geliebte in ihren Träumen unterstützte und ihr Notizen der Ermutigung schrieb. In den antiken Schriften wird er als bescheidener Held beschrieben, der die Künste der Küche ebenso meisterte wie die des Tanzes - eine seltene Kombination, die selbst die Götter erstaunte.",
 					"icon": "🖼️"
 				},
 				"astronomy": {
 					"title": "Wichtigste astronomische Fakten",
 					"facts": [
-						"Der hellste Stern des Sternbilds, 'Cor Leonis' (Herz des Leon), ist ein besonderer veränderlicher Stern - seine Helligkeit pulsiert im 13-Sekunden-Takt, perfekt für einen Taylor-Swift-Beat",
-						"",
-						""
+						"Der hellste Stern des Sternbilds, 'Cor Leonis' (Herz des Leon), ist ein besonderer veränderlicher Stern - seine Helligkeit pulsiert im 4/4-Takt, perfekt für 'Karma' von Taylor Swift",
+						"Ein mysteriöser Nebel umgibt das Sternbild, der einen ungewöhnlich angenehmen Duft verströmt - Astronomen vermuten eine bisher unentdeckte kosmische Duftsignatur",
+						"Das Sternbild ist bekannt für sein stilvolles Erscheinungsbild - die Anordnung der Sterne folgt einem fast modischen Muster"
 					],
 					"icon": "🌟"
 				}
@@ -812,9 +801,11 @@ const constellationData = {
 			"details": {
 				"details1": {
 					"title": "Spannende Details",
-					"subtitle": "",
+					"subtitle": "Himmlische Talente",
 					"facts": [
-						""
+						"In der Nähe des Sternbilds befindet sich der 'Culinary Nebula', bekannt für zwei besonders helle Spots: Den 'Chocolate Nova' (berühmt für seinen dunklen Glanz wie perfekt gebackener Schokokuchen) und die 'Banana Nebula' (mit charakteristischen Streifen wie perfektes Bananenbrot)",
+						"Der Sternhaufen 'NGC-Fungi' in der Nähe erinnert an eine perfekt geschichtete Pilzlasagne - ein beliebtes Ziel gleichwohl für vegetarische und vegane Astronomen",
+						"Die Bewegungsbahn der Hauptsterne beschreibt eine elegante Hüftschwung-Kurve, die Astrophysiker als 'gravitational dance pattern eines wohlgeformten Hinterteils' bezeichnen"
 					],
 					"icon": "🧠"
 				},
@@ -823,7 +814,8 @@ const constellationData = {
 					"subtitle": "Archetyp des empathischen Beschützers",
 					"facts": [
 						"Jung hätte seine Freude: Hier verschmelzen die Archetypen des 'weisen Mentors' und des 'liebenden Beschützers' zu etwas Neuem",
-						""
+						"Das Sternbild verkörpert die seltene Kombination von Stärke und Sensibilität - ein kosmisches Beispiel für moderne Männlichkeit",
+						"Trotz seiner beeindruckenden Erscheinung zeigt das Sternbild eine bemerkenswerte 'astronomische Bescheidenheit' - es überstrahlt nie seine Nachbarn"
 					],
 					"icon": "👩‍🎓"
 				}
