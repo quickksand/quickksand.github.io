@@ -349,76 +349,9 @@ const constellationData = {
 			}
 		},
 		{
-		   "id": "ursa-major",
-		   "name": "Großer Bär",
-		   "alias": "Ursa Major",
-		   "difficulty": "mittel-schwer",
-	       "coordinates": {
-				"centroid": {
-					"x": 430.92,
-					"y": 396.92
-				},
-				"bounds": {
-					"minX": 244.5,
-					"minY": 187.5,
-					"maxX": 507,
-					"maxY": 533.5,
-					"width": 262.5,
-					"height": 346
-				}
-			},
-		   "puzzle": {
-			   "text": "Der Große Wagen ist nur mein hellster Teil - findest du meinen Kopf und meine Tatzen, die das komplette Bärenbild formen?",
-			   "hints": [
-				   "Starte beim Großen Wagen - er bildet Rücken und Schwanz des Bären",
-				   "Vom 'Wagenkasten' aus findest du schwächere Sterne, die in drei Bögen die 'Bärentatzen' bilden",
-				   "Vom vorderen 'Wagenkasten' führt eine Reihe schwächerer Sterne zum 'Kopf' des Bären"
-			   ],
-			   "emergencyHint": {
-				   "imageUrl": "/constellations/ursa_major/outline.svg",
-				   "description": "Schematische Darstellung des Großen Bären"
-			   }
-		   },
-		   "basics": {
-			   "mythology": {
-				   "title": "Mythologie",
-				   "text": "Der griechischen Sage nach ist es Kallisto, eine Nymphe, die von der eifersüchtigen Hera in einen Bären verwandelt wurde. Zeus setzte sie zusammen mit ihrem Sohn (dem Kleinen Bären) an den Himmel.",
-				   "icon": "🖼️"
-			   },
-			   "astronomy": {
-				   "title": "Wichtigste astronomische Fakten",
-				   "facts": [
-					   "Der Große Bär ist mit 1280 Quadratgrad das drittgrößte Sternbild des Himmels.",
-					   "Im Sternbild befinden sich die berühmten Galaxien M81 und M82, die schon im Fernglas als nebelhafte Flecken zu sehen sind. Sie wechselwirken gravitativ miteinander."
-				   ],
-				   "icon": "🌟"
-			   }
-		   },
-		   "details": {
-			   "details1": {
-				   "title": "Spannende Details",
-				   "facts": [
-					   "Weird Sidenote: Die Geschichte der Kallisto zeigt ein häufiges Muster in der Mythologie: Frauen werden für das Verhalten der Männer bestraft - ein früher Beleg für systemischen Sexismus.",
-					   "Interessanter Perspektivwechsel ist die Transformation: Statt die Bärengestalt als Strafe zu sehen, kann man sie als Symbol für weibliche Stärke und Naturverbundenheit interpretieren",
-					   "Das Sternbild enthält ein einzigartiges Objekt: Den 'Eulennebel' M97, einen planetarischen Nebel, dessen dunkle 'Augen' ihm sein charakteristisches Aussehen geben."
-				   ],
-				   "icon": "🧠"
-			   },
-			   "details2": {
-				   "title": "Kulturelle & Historische Bedeutung",
-				   "subtitle": "Ein Sternbild, viele Deutungen",
-				   "facts": [
-					   "In China war der Bereich des 'Bärenkopfes' als 'Himmlischer Jade-Palast' bekannt.",
-					   "Die Form eines Bären findet sich überraschenderweise sowohl bei nordamerikanischen Ureinwohnern als auch bei den alten Griechen - eine der wenigen identischen Deutungen über Kontinente hinweg.",
-				   ],
-				   "icon": "🌏"
-			   }
-		   }
-		},
-		{
 			"id": "ursa-minor",
-			"name": "Kleiner Bär",
-			"alias": "Ursa Minor",
+			"name": "Kleiner Wagen",
+			"alias": "Kleiner Bär",
 			"difficulty": "mittel-leicht",
 			"coordinates": {
 				"centroid": {
@@ -435,10 +368,10 @@ const constellationData = {
 				}
 			},
 			"puzzle": {
-				"text": "Meine Deichsel zeigt zum Pol, mein hellster Stern ist Seeleuten treu - eine kleinere Version meines großen Bruders bin ich. Wer versteckt sich im Schatten des Großen Bären?",
+				"text": "Meine Deichsel zeigt zum Pol, mein hellster Stern ist Seeleuten treu - eine kleinere Version meines großen Bruders bin ich. Wer versteckt sich im Schatten des Großen Wagen?",
 				"hints": [
 					"Finde zuerst den Polarstern mit Hilfe des Großen Wagens (Verlängerung der 'Pointer Stars')",
-					"Der Polarstern bildet die Schwanzspitze des Kleinen Bären",
+					"Der Polarstern bildet die Deichselspitze des Kleinen Wagens",
 					"Von dort aus siehst du eine kleine 'Wagenform' aus schwächeren Sternen - wie ein blasseres Spiegelbild des Großen Wagens"
 				],
 				"emergencyHint": {
@@ -449,7 +382,7 @@ const constellationData = {
 			"basics": {
 				"mythology": {
 					"title": "Mythologie",
-					"text": "Nach der griechischen Sage ist es Arktos, der in einen Bären verwandelte Sohn der Kallisto (Großer Bär). Zeus setzte beide an den Himmel, wo sie nun endlos um den Himmelspol kreisen - für immer vereint, aber nie vereinigt.",
+					"text": "Wer liest das schon? 🤡",
 					"icon": "🖼️"
 				},
 				"astronomy": {
@@ -466,7 +399,7 @@ const constellationData = {
 				"details1": {
 					"title": "Spannende Details",
 					"facts": [
-						"Der Polarstern ist nicht der hellste Stern am Nordhimmel (das ist Capella), aber der allerwichtigste für die Navigation - ein kosmischer Fixpunkt in einer sich drehenden Welt.",
+						"Wow! Zum kleinen Wagen gibt es nichts spannendes! Aber zum Polarstern (siehe unten)! - die Underground Railroad ist ja crazy.",
 					],
 					"icon": "🧠"
 				},
@@ -548,141 +481,6 @@ const constellationData = {
 				   "icon": "🔭"
 			   }
 		   }
-		},
-		{
-            "id": "andromeda",
-            "name": "Andromeda",
-            "alias": "Die Gefesselte",
-            "difficulty": "mittel",
-            "coordinates": {
-                "centroid": {
-                    "x": 885.85,
-                    "y": 664.21
-                },
-                "bounds": {
-                    "minX": 787.33,
-                    "minY": 557.5,
-                    "maxX": 951,
-                    "maxY": 754.5,
-                    "width": 163.67,
-                    "height": 197
-                }
-            },
-            "puzzle": {
-                "text": "Angekettet zwischen Mutter und Held, beherberge ich die fernste Schönheit, die dein Auge erblicken kann - welche Prinzessin bin ich?",
-                "hints": [
-                    "Suche von der Cassiopeia (dem W) ausgehend nach einer Kette hellerer Sterne",
-                    "Der hellste Teil ist ein längliches, schwach leuchtendes 'Wölkchen' - die Andromedagalaxie",
-                    "Die Hauptsterne bilden eine leicht geknickte Linie, die von Cassiopeia 'wegzeigt'"
-                ],
-                "emergencyHint": {
-                    "imageUrl": "/constellations/andromeda/outline.svg",
-                    "description": "Schematische Darstellung der Andromeda"
-                }
-            },
-            "basics": {
-                "mythology": {
-                    "title": "Mythologie",
-                    "text": "Andromeda, Tochter der Cassiopeia, wurde zur Strafe für den Hochmut ihrer Mutter an einen Felsen gekettet und einem Seeungeheuer geopfert. Perseus rettete sie im letzten Moment und machte sie zu seiner Frau.",
-                    "icon": "🖼️"
-                },
-                "astronomy": {
-                    "title": "Wichtigste astronomische Fakten",
-                    "facts": [
-                        "Die Andromedagalaxie (M31) ist mit 2,5 Millionen Lichtjahren Entfernung das fernste Objekt, das man mit bloßem Auge sehen kann (wenn man kann 👓). Sie enthält etwa eine Billion Sterne!",
-                        "Unsere Milchstraße und die Andromedagalaxie bewegen sich aufeinander zu und werden in etwa 4,5 Milliarden Jahren verschmelzen.",
-                        "Die Hauptsterne von Andromeda bilden eine charakteristische Kette, die die 'Ketten' der gefesselten Prinzessin darstellt."
-                    ],
-                    "icon": "🌟"
-                }
-            },
-            "details": {
-                "details1": {
-                    "title": "Spannende Details",
-                    "facts": [
-                        "Andromeda ist die erste erkannte 'Sterneninsel' außerhalb unserer Milchstraße (Edwin Hubble 1923).",
-                        "Die Galaxie ist bereits 6-mal so groß am Himmel wie der Vollmond, erscheint uns aber viel kleiner, weil sie so lichtschwach ist.",
-                    ],
-                    "icon": "🧠"
-                },
-                "details2": {
-                    "title": "Psychologie & Symbolik",
-                    "subtitle": "Familie, Bindung und Entwicklung",
-                    "facts": [
-                        "Die Geschichte thematisiert den entwicklungs-psychologisch wichtigen Prozess der Ablösung von den Eltern - wenn auch in (minimal) dramatischer Form.",
-                        "Der Name 'Andromeda' bedeutet 'die über Männer Herrschende' - ein interessanter Kontrast zu ihrer scheinbar passiven Rolle.",
-                        "Die Rettung durch Perseus kann die Bedeutung sozialer Unterstützung bei der Überwindung von Krisen symbolisieren. (Man kann nicht immer alles alleine schaffen würden ältere Menschen jetzt sagen 🧓)",
-                    ],
-                    "icon": "🧠"
-                }
-            }
-        },
-		{
-			"id": "perseus",
-			"name": "Perseus",
-			"alias": "Der Held",
-			"difficulty": "mittel",
-			"coordinates": {
-				"centroid": {
-					"x": 694.94,
-					"y": 692.19
-				},
-				"bounds": {
-					"minX": 654.24,
-					"minY": 625.98,
-					"maxX": 738.48,
-					"maxY": 767.48,
-					"width": 84.23,
-					"height": 141.5
-				}
-			},
-			"puzzle": {
-				"text": "Mit erhobenem Schwert und Medusas Haupt stehe ich zwischen Cassiopeia und dem Stier. Mein hellster Stern blinzelt regelmäßig - findest du den Helden?",
-				"hints": [
-					"Suche unterhalb von Cassiopeia nach einer Reihe mittelheller Sterne",
-					"Der auffälligste Stern (Algol) blinkt alle 2,8 Tage und ist leicht zu erkennen",
-					"Von Cassiopeia aus findest du eine Kette von Sternen, die wie ein umgedrehtes 'Y' aussieht"
-				],
-				"emergencyHint": {
-					"imageUrl": "/constellations/perseus/outline.svg",
-					"description": "Schematische Darstellung des Perseus"
-				}
-			},
-			"basics": {
-				"mythology": {
-					"title": "Mythologie",
-					"text": "Perseus ist der Held, der Andromeda (Tochter der Cassiopeia) rettete. Mit dem abgeschlagenen Haupt der Medusa versteinerte er das Seeungeheuer Cetus, das Andromeda bedrohte.",
-					"icon": "🖼️"
-				},
-				"astronomy": {
-					"title": "Wichtigste astronomische Fakten",
-					"facts": [
-						"Der Stern Algol ('Dämonenstern') blinzelt! Alle 2,87 Tage wird der hellere Stern vom dunkleren teilweise verdeckt, wodurch seine Helligkeit deutlich abnimmt.",
-						"Der Perseus-Doppelsternhaufen (h und χ Persei) ist mit bloßem Auge nur als verwaschener Fleck zu sehen. Im Fernglas löst er sich in zwei prachtvolle Sternhaufen auf! (#GLOW-UP ✨) 🔭",
-						"Immer im August scheinen aus Perseus die Perseiden zu regnen - einer toller Meteorstrom für laue Nächte."
-					],
-					"icon": "🌟"
-				}
-			},
-			"details": {
-				"details1": {
-					"title": "Spannende Details",
-					"facts": [
-						"Der Name Algol kommt aus dem Arabischen und bedeutet 'Ghul' oder 'Dämon'. Die alten Astronomen bemerkten sein regelmäßiges 'Blinzeln' und hielten es für unheimlich.",
-						"Die Perseiden entstehen, wenn die Erde die Staubspur des Kometen Swift-Tuttle kreuzt (für mich gibts nur ein SWIFT!!! 🙄). Mit bis zu 100 Sternschnuppen pro Stunde sind sie das populärste astronomische Sommerereignis.",
-					],
-					"icon": "🧠"
-				},
-				"details2": {
-					"title": "Perseus in Kultur & Medien",
-					"subtitle": "Von Antike bis Alohomora",
-					"facts": [
-						"Das 'Blinken' von Algol wurde in alten arabischen Texten mit dem unheimlichen Blinzeln des Medusenhauptes verglichen - eine erstaunlich präzise Beschreibung des astronomischen Phänomens.",
-						"Die Geschichte von Perseus inspirierte das Konzept des 'Monomythos' (Heldenreise) - ein Grundmuster, das sich in Geschichten von Star Wars bis Harry Potter wiederfindet."
-					],
-					"icon": "🎬"
-				}
-			}
 		},
 		{
 			"id": "gemini",
